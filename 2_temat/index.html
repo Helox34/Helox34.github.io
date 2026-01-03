@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIĄGI I REKURENCJA</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="bg-animation"></div>
+
+    <nav class="top-nav fade-in">
+        <a href="../index.html" class="nav-btn"><i class="fa-solid fa-arrow-left"></i> Wróć do Menu</a>
+    </nav>
+
+    <div class="lesson-container">
+        
+        <header class="lesson-header fade-in-stagger">
+            <div class="icon-wrapper">
+                <i class="fa-solid fa-leaf"></i>
+            </div>
+            <h1 class="lesson-title">CIĄGI <span class="accent">I REKURENCJA</span></h1>
+            <p class="lesson-subtitle">Od liczb Fibonacciego do idealnego słonecznika</p>
+        </header>
+
+        <article class="content-box fade-in-stagger">
+            
+            <h2>1. Rekurencja: Przepis na nieskończoność</h2>
+            <p>
+                W informatyce i matematyce <strong>rekurencja</strong> to sytuacja, w której coś definiujemy za pomocą tego samego, ale "mniejszego".
+                Najsłynniejszym przykładem jest Ciąg Fibonacciego, gdzie każda liczba to suma dwóch poprzednich:
+            </p>
+            <div class="math-formula">
+                a<sub>n+2</sub> = a<sub>n+1</sub> + a<sub>n</sub>
+            </div>
+            <p>
+                Początkowe wyrazy to: 1, 1, 2, 3, 5, 8, 13, 21... Ale co się stanie, gdy podzielimy wyraz następny przez poprzedni?
+            </p>
+
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Wyraz a<sub>n</sub></th>
+                            <th>Wyraz a<sub>n+1</sub></th>
+                            <th>Stosunek (a<sub>n+1</sub> / a<sub>n</sub>)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fibTableBody">
+                        </tbody>
+                </table>
+            </div>
+            <p style="margin-top: 10px; font-size: 0.9rem; color: #94a3b8;">
+                Zauważ: Im dalej w las, tym wynik jest bliższy liczbie <strong>1.618...</strong> (Złota Liczba &phi;).
+            </p>
+
+            <hr class="divider">
+
+            <h2>2. Symulacja: Natura to Matematyka</h2>
+            <p>
+                Dlaczego rośliny (np. słoneczniki) układają nasiona zgodnie z tym ciągiem? Chodzi o <strong>optymalizację miejsca</strong>.
+                Roślina "obracając się" o Złoty Kąt (ok. 137.5°), zapewnia, że nasiona nigdy nie ułożą się w jednej linii prostej, marnując miejsce.
+            </p>
+
+            <div class="interactive-canvas-wrapper">
+                <canvas id="sunflowerCanvas" width="500" height="500"></canvas>
+                
+                <div class="controls">
+                    <label for="angleSlider">Kąt obrotu: <span id="angleValue" class="accent">137.5</span>°</label>
+                    <input type="range" id="angleSlider" min="90" max="180" step="0.1" value="137.5">
+                    
+                    <div class="buttons">
+                        <button id="btnGolden" class="control-btn active">Złoty Kąt (Idealny)</button>
+                        <button id="btnRational" class="control-btn">Kąt 90° (Zły)</button>
+                    </div>
+                </div>
+            </div>
+
+            <p>
+                <strong>Zadanie:</strong> Przesuwaj suwak. Zobaczysz, że tylko przy wartościach bliskich <strong>137.5°</strong> powstają charakterystyczne spirale. 
+                Przy zwykłych kątach (np. <strong>90°</strong> lub <strong>120°</strong>) powstają proste ramiona – to nieefektywne upakowanie!
+            </p>
+
+        </article>
+
+        <div class="next-step fade-in-stagger">
+            <p>Skoro wiesz już, czym jest Złota Liczba...</p>
+            <a href="../2_gra/index.html" class="cta-button">
+                Rozpocznij Grę: Logodle & Ciągi <i class="fa-solid fa-play"></i>
+            </a>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
