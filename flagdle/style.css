@@ -24,85 +24,117 @@ body {
 }
 
 .bg-animation {
-    position: absolute; width: 200%; height: 200%;
+    position: fixed; width: 200%; height: 200%; top: -50%; left: -50%;
     background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.15), transparent 60%);
     animation: rotateBg 20s linear infinite; z-index: -1;
 }
 @keyframes rotateBg { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-/* SZEROKI PANEL DLA PODWÓJNEGO MENU */
+/* --- UKŁAD DWÓCH OKIEN (SPLIT MENU) --- */
+.split-menu-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    margin-top: 60px;
+}
+
+/* Pojedyncza karta (Okno) */
 .glass-panel {
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
     border-radius: 30px;
-    padding: 3rem;
-    width: 95%; max-width: 550px; /* Domyślnie dla gry */
+    padding: 2.5rem;
+    width: 100%; 
+    max-width: 480px;
     box-shadow: 0 25px 60px rgba(0,0,0,0.6);
     text-align: center; position: relative;
     transition: transform 0.3s ease;
+    display: flex; flex-direction: column;
 }
 
-/* Klasa dla szerokiego menu */
-.wide-panel {
-    max-width: 1100px; /* Szerokość na 2 kolumny */
-    padding: 2rem;
+/* Karta gry (po wejściu w poziom) */
+.game-panel {
+    max-width: 550px;
+    margin: auto;
 }
 
-.menu-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: start;
-}
-
-.menu-column {
-    display: flex; flex-direction: column; height: 100%;
-}
-
-.left-col { border-right: 1px solid rgba(255,255,255,0.1); padding-right: 20px; }
-.right-col { padding-left: 20px; }
-
-/* TYPOGRAFIA */
+/* LOGO I NAGŁÓWKI */
 .logo-area { margin-bottom: 1.5rem; min-height: 80px; }
 h1 { font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; font-size: 2.2rem; }
 .accent { color: var(--primary); background: linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip: text; color: transparent; }
-.subtitle { color: var(--text-muted); font-size: 0.9rem; }
+.subtitle { color: var(--text-muted); font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase; }
 
-/* PRZYCISKI I WYNIKI */
-.levels-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; }
+/* KONTENERY POZIOMÓW */
+.levels-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 10px; width: 100%; }
 .level-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
 
+/* STYLIZACJA PRZYCISKÓW */
 .btn-level {
-    flex: 1; border: none; padding: 15px; border-radius: 14px; cursor: pointer; text-align: center;
-    color: white; border: 1px solid rgba(255,255,255,0.05); transition: transform 0.2s, filter 0.2s;
-    height: 70px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+    flex: 1; 
+    border: none; 
+    padding: 12px 20px; 
+    border-radius: 16px; 
+    cursor: pointer; 
+    text-align: center;
+    color: white; 
+    border: 1px solid rgba(255,255,255,0.1); 
+    transition: transform 0.2s, filter 0.2s, box-shadow 0.2s;
+    height: 75px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
-.btn-level:hover { transform: scale(1.02); filter: brightness(1.1); }
+.btn-level:hover { transform: translateY(-3px); filter: brightness(1.1); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
 .btn-level:active { transform: scale(0.98); }
 
-.btn-title { font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+.btn-title { font-weight: 800; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 3px; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
 .btn-desc { font-size: 0.75rem; opacity: 0.9; font-weight: 500; }
 
-.level-score { width: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.score-label { font-size: 0.55rem; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+/* --- KOLORY PRZYCISKÓW KONTYNENTÓW --- */
+.btn-europa { background: linear-gradient(135deg, #059669, #10b981); border-color: #34d399; } 
+.btn-azja { background: linear-gradient(135deg, #d97706, #f59e0b); border-color: #fbbf24; } 
+.btn-afryka { background: linear-gradient(135deg, #7c3aed, #8b5cf6); border-color: #a78bfa; } 
+/* Zmiana na niebieski */
+.btn-ameryki { background: linear-gradient(135deg, #0284c7, #2563eb); border-color: #38bdf8; } 
+.btn-swiat { background: linear-gradient(135deg, #7f1d1d, #450a0a); border-color: #ef4444; border: 1px solid rgba(255, 100, 100, 0.3); box-shadow: 0 0 20px rgba(220, 38, 38, 0.15); } 
+
+/* KOLORY PRZYCISKÓW TRUDNOŚCI (PRO) */
+.btn-easy { background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.5)); border-color: #10b981; }
+.btn-hard { background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.5)); border-color: #f59e0b; }
+.btn-pro { background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.5)); border-color: #8b5cf6; }
+.btn-expert { background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.5)); border-color: #ef4444; }
+
+/* REKORDY */
+.level-score { width: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+.score-label { font-size: 0.55rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
 .score-value { font-size: 1.8rem; font-weight: 900; color: var(--gold); text-shadow: 0 0 15px rgba(255, 215, 0, 0.4); line-height: 1; }
 
-/* KOLORY PRZYCISKÓW - PRAWA STRONA (TRUDNOŚĆ) */
-.btn-easy { background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.6)); border-color: #10b981; }
-.btn-hard { background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.6)); border-color: #f59e0b; }
-.btn-pro { background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.6)); border-color: #8b5cf6; }
-.btn-expert { background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.6)); border-color: #ef4444; }
+/* STYLIZACJA INSTRUKCJI IN-LINE */
+.inline-instructions {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 15px;
+    text-align: left;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
 
-/* KOLORY PRZYCISKÓW - LEWA STRONA (KONTYNENTY) */
-.btn-europa { background: linear-gradient(135deg, #064e3b, #10b981); border-color: #10b981; } /* Zielony */
-.btn-azja { background: linear-gradient(135deg, #78350f, #d97706); border-color: #f59e0b; } /* Brązowo-Złoty */
-.btn-afryka { background: linear-gradient(135deg, #4c1d95, #7c3aed); border-color: #8b5cf6; } /* Fiolet */
-.btn-ameryki { background: linear-gradient(135deg, #7f1d1d, #b91c1c); border-color: #ef4444; } /* Bordowy */
-.btn-swiat { background: linear-gradient(135deg, #371818, #882d2d); border-color: #fca5a5; box-shadow: 0 0 15px rgba(220, 38, 38, 0.3); } /* Specjalny kafelek "Cały Świat" */
+.instr-title { font-weight: 700; color: #fff; margin-bottom: 8px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+.inline-instructions ul { padding-left: 20px; margin: 0; list-style-type: disc; }
+.inline-instructions li { margin-bottom: 4px; line-height: 1.4; }
+.inline-instructions strong { color: var(--primary); }
 
-/* Pozostałe elementy UI (Gra) */
+/* UI GRY */
 .game-hud { display: flex; justify-content: space-between; margin-bottom: 30px; align-items: flex-end; padding: 0 10px; }
 .hud-item { display: flex; flex-direction: column; align-items: center; }
 .hud-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
@@ -154,12 +186,10 @@ input:focus { border-color: var(--primary); background: rgba(0,0,0,0.5); }
 .btn-home { position: fixed; top: 25px; left: 25px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 20px; border-radius: 30px; color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; z-index: 1000; backdrop-filter: blur(10px); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 .btn-home:hover { background: rgba(255, 255, 255, 0.25); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
 
-/* Responsywność dla małych ekranów (Mobilki) */
+/* Responsywność */
 @media (max-width: 900px) {
-    .menu-grid { grid-template-columns: 1fr; gap: 30px; }
-    .wide-panel { padding: 1.5rem; max-width: 95%; margin-top: 60px; } /* Odstęp od przycisku menu */
-    .left-col { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding-right: 0; padding-bottom: 20px; }
-    .right-col { padding-left: 0; padding-top: 20px; }
+    .split-menu-container { flex-direction: column; align-items: center; margin-top: 70px; }
+    .glass-panel { padding: 1.5rem; }
     .btn-level { height: 60px; }
     .btn-home { top: 15px; left: 15px; width: 45px; height: 45px; padding: 0; justify-content: center; }
     .btn-home span { display: none; }
