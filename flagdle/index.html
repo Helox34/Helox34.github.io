@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flagdle Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <a href="../index.html" class="btn-home">
+        <i class="fa-solid fa-house"></i> <span>MENU</span>
+    </a>
+
+    <div class="bg-animation"></div>
+
+    <div id="menu" class="card glass-panel fade-in wide-panel">
+        
+        <div class="menu-grid">
+            
+            <div class="menu-column left-col">
+                <div class="logo-area">
+                    <h1>FLAGDLE</h1>
+                    <p class="subtitle">Wybierz kontynent:</p>
+                </div>
+
+                <div class="levels-container">
+                    <div class="level-row">
+                        <button class="btn-level btn-europa" onclick="game.start('europa')">
+                            <span class="btn-title">EUROPA</span>
+                        </button>
+                        <div class="level-score">
+                            <span class="score-label">REKORD</span>
+                            <span class="score-value gold-glow" id="record-europa">0</span>
+                        </div>
+                    </div>
+
+                    <div class="level-row">
+                        <button class="btn-level btn-azja" onclick="game.start('azja')">
+                            <span class="btn-title">AZJA</span>
+                        </button>
+                        <div class="level-score">
+                            <span class="score-label">REKORD</span>
+                            <span class="score-value gold-glow" id="record-azja">0</span>
+                        </div>
+                    </div>
+
+                    <div class="level-row">
+                        <button class="btn-level btn-afryka" onclick="game.start('afryka')">
+                            <span class="btn-title">AFRYKA</span>
+                        </button>
+                        <div class="level-score">
+                            <span class="score-label">REKORD</span>
+                            <span class="score-value gold-glow" id="record-afryka">0</span>
+                        </div>
+                    </div>
+
+                    <div class="level-row">
+                        <button class="btn-level btn-ameryki" onclick="game.start('ameryki')">
+                            <span class="btn-title" style="font-size: 0.9rem;">AMERYKI I RESZTA</span>
+                        </button>
+                        <div class="level-score">
+                            <span class="score-label">REKORD</span>
+                            <span class="score-value gold-glow" id="record-ameryki">0</span>
+                        </div>
+                    </div>
+
+                    <div class="level-row">
+                        <button class="btn-level btn-swiat" onclick="game.start('swiat')">
+                            <span class="btn-title">CAŁY ŚWIAT</span>
+                        </button>
+                        <div class="level-score">
+                            <span class="score-label">REKORD</span>
+                            <span class="score-value gold-glow" id="record-swiat">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-column right-col">
+                <div class="logo-area">
+                    <h1>FLAGDLE <span class="accent">PRO</span></h1>
+                    <p class="subtitle">Wybierz poziom:</p>
+                </div>
+
+                <div class="levels-container">
+                    <div class="level-row">
+                        <button class="btn-level btn-easy" onclick="game.start('easy')">
+                            <span class="btn-title">ŁATWY</span>
+                            <span class="btn-desc">Znane kraje</span>
+                        </button>
+                        <div class="level-score">
+                            <span class="score-label">REKORD</span>
+                            <span class="score-value gold-glow" id="record-easy">0</span>
+                        </div>
+                    </div>
+
+                    <div class="level-row">
+                        <button class="btn-level btn-hard" onclick="game.start('hard')">
+                            <span class="btn-title">ŚREDNI</span>
+                            <span class="btn-desc">Europa + Świat</span>
+                        </button>
+                        <div class="level-score">
+                            <span class="score-label">REKORD</span>
+                            <span class="score-value gold-glow" id="record-hard">0</span>
+                        </div>
+                    </div>
+
+                    <div class="level-row">
+                        <button class="btn-level btn-pro" onclick="game.start('pro')">
+                            <span class="btn-title">TRUDNY</span>
+                            <span class="btn-desc">Dla podróżników</span>
+                        </button>
+                        <div class="level-score">
+                            <span class="score-label">REKORD</span>
+                            <span class="score-value gold-glow" id="record-pro">0</span>
+                        </div>
+                    </div>
+
+                    <div class="level-row">
+                        <button class="btn-level btn-expert" onclick="game.start('expert')">
+                            <span class="btn-title">EKSPERT</span>
+                            <span class="btn-desc">Hardcore</span>
+                        </button>
+                        <div class="level-score">
+                            <span class="score-label">REKORD</span>
+                            <span class="score-value gold-glow" id="record-expert">0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <button class="btn-text" onclick="ui.toggleInstructions()">Jak działa punktacja?</button>
+                </div>
+            </div>
+
+        </div> <div id="instructions" class="hidden glass-inner">
+            <ul>
+                <li><strong>1 próba:</strong> +6 pkt + bonus za passę</li>
+                <li><strong>Każdy błąd:</strong> -1 pkt i mniejszy blur</li>
+                <li><strong>Passa:</strong> Każda kolejna dobra odpowiedź zwiększa bonus!</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="game" class="card glass-panel hidden">
+        <div id="recordAnim" class="record-popup hidden">🏆 NOWY REKORD! 🏆</div>
+        <header class="game-hud">
+            <div class="hud-item">
+                <span class="hud-label">Runda</span>
+                <span class="hud-value"><span id="round">1</span>/8</span>
+            </div>
+            <div class="hud-item score-container">
+                <span class="hud-label">Wynik</span>
+                <span class="hud-value highlight" id="score">0</span>
+            </div>
+            <div class="hud-item streak-container">
+                <span class="hud-label">Passa</span>
+                <span class="hud-value fire-text" id="currentStreak">0</span>
+            </div>
+        </header>
+        <div class="progress-track"><div class="progress-fill" id="progressBar"></div></div>
+        <div class="flag-wrapper">
+            <div class="points-popup" id="pointsPopup"></div>
+            <img id="flag" class="flag-img" src="" alt="Flaga" draggable="false">
+        </div>
+        <div class="interaction-area">
+            <div class="input-group">
+                <input id="guess" type="text" placeholder="Wpisz nazwę kraju..." autocomplete="off">
+                <ul id="suggestList" class="suggestions hidden"></ul>
+            </div>
+            <button id="checkBtn" class="btn-action">SPRAWDŹ</button>
+        </div>
+        <div class="feedback-box">
+            <p id="message" class="msg-text">Powodzenia!</p>
+            <div class="attempts-dots" id="attemptsDots"></div>
+        </div>
+        <button id="backMenu" class="btn-secondary hidden" onclick="game.backToMenu()">WRÓĆ DO MENU</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
