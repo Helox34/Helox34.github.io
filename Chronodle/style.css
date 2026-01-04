@@ -24,6 +24,7 @@ body {
     overflow-x: hidden;
 }
 
+/* Animowane tło */
 .bg-animation {
     position: fixed; width: 200%; height: 200%; top: -50%; left: -50%;
     background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.15), transparent 60%);
@@ -32,7 +33,7 @@ body {
 }
 @keyframes rotateBg { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-/* Główna Karta */
+/* Główna Karta (Szklany Panel) */
 .glass-panel {
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
@@ -48,6 +49,7 @@ body {
     transition: transform 0.3s ease;
 }
 
+/* Nagłówek */
 .header-area { margin-bottom: 2rem; }
 .compact-header { margin-bottom: 1rem; }
 .compact-header h2 { font-size: 2rem; margin: 0; letter-spacing: -1px; }
@@ -57,7 +59,7 @@ h1 { font-weight: 900; letter-spacing: -2px; margin-bottom: 5px; font-size: 3.5r
 .subtitle { color: var(--text-muted); font-size: 1.2rem; letter-spacing: 1px; }
 .subtitle-small { color: var(--text-muted); font-size: 0.9rem; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px;}
 
-/* --- STYL MENU POZIOMÓW --- */
+/* --- STYL MENU POZIOMÓW (Kafelki) --- */
 .levels-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -65,18 +67,20 @@ h1 { font-weight: 900; letter-spacing: -2px; margin-bottom: 5px; font-size: 3.5r
     margin-top: 30px;
 }
 
-/* KAFELEK MENU */
+/* Przycisk Poziomu */
 .btn-level {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 15px 25px; /* Więcej miejsca po bokach */
+    padding: 15px 25px;
     border-radius: 20px;
     color: white;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
+    /* Układ wewnętrzny: Lewa i Prawa strona */
     display: flex;
     align-items: center;
-    justify-content: space-between; /* KLUCZOWE: Rozrzuca elementy na boki */
+    justify-content: space-between; 
     text-align: left;
     min-height: 100px;
 }
@@ -87,7 +91,7 @@ h1 { font-weight: 900; letter-spacing: -2px; margin-bottom: 5px; font-size: 3.5r
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-/* Lewa strona kafelka (Ikona + Teksty) */
+/* LEWA STRONA: Wrapper na Ikonę i Tekst */
 .lvl-content-wrapper {
     display: flex;
     align-items: center;
@@ -109,15 +113,15 @@ h1 { font-weight: 900; letter-spacing: -2px; margin-bottom: 5px; font-size: 3.5r
 .lvl-date { font-size: 0.75rem; color: #94a3b8; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
 .lvl-name { font-size: 1.1rem; font-weight: 800; line-height: 1.2; }
 
-/* Prawa strona kafelka (REKORD - jak na zdjęciu) */
+/* PRAWA STRONA: Box z Rekordem */
 .lvl-record-box {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Wycentrowany pionowo rekord */
+    align-items: center;
     justify-content: center;
-    padding-left: 15px;
-    border-left: 1px solid rgba(255,255,255,0.1); /* Delikatna linia oddzielająca */
-    min-width: 70px;
+    padding-left: 20px;
+    border-left: 1px solid rgba(255,255,255,0.1); /* Linia oddzielająca */
+    min-width: 80px;
 }
 
 .rec-label { font-size: 0.6rem; color: #94a3b8; letter-spacing: 1px; margin-bottom: 2px; }
@@ -128,36 +132,44 @@ h1 { font-weight: 900; letter-spacing: -2px; margin-bottom: 5px; font-size: 3.5r
     grid-column: span 2;
 }
 
-/* KOLORY PRZYCISKÓW (Time Travel Theme) */
-/* Modern (Cyjan) */
+/* --- KOLORYSTYKA PRZYCISKÓW --- */
+
+/* 1. Modern (Cyjan) */
 .lvl-1 { border-left: 4px solid #06b6d4; }
 .lvl-1 .lvl-icon { color: #06b6d4; }
 .lvl-1:hover { border-color: #22d3ee; box-shadow: 0 10px 40px rgba(6, 182, 212, 0.2); }
 
-/* Empires (Bursztyn) */
+/* 2. Empires (Bursztyn) */
 .lvl-2 { border-left: 4px solid #f59e0b; }
 .lvl-2 .lvl-icon { color: #f59e0b; }
 .lvl-2:hover { border-color: #fbbf24; box-shadow: 0 10px 40px rgba(245, 158, 11, 0.2); }
 
-/* Renaissance (Fiolet) */
+/* 3. Renaissance (Fiolet) */
 .lvl-3 { border-left: 4px solid #8b5cf6; }
 .lvl-3 .lvl-icon { color: #8b5cf6; }
 .lvl-3:hover { border-color: #a78bfa; box-shadow: 0 10px 40px rgba(139, 92, 246, 0.2); }
 
-/* Ancient (Karmazyn/Czerwony) */
+/* 4. Ancient (Karmazyn) */
 .lvl-4 { border-left: 4px solid #ef4444; }
 .lvl-4 .lvl-icon { color: #ef4444; }
 .lvl-4:hover { border-color: #f87171; box-shadow: 0 10px 40px rgba(239, 68, 68, 0.2); }
 
-/* MIX (Gradient) */
+/* 5. MIX (Ciemna Żółć / Złoto) - NOWY KOLOR */
 .lvl-5 { 
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(239, 68, 68, 0.1)); 
-    border: 1px solid rgba(255,255,255,0.1);
+    background: linear-gradient(135deg, rgba(202, 138, 4, 0.15), rgba(161, 98, 7, 0.15)); 
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
-.lvl-5:hover { background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(239, 68, 68, 0.2)); }
-.lvl-5 .lvl-icon { background: linear-gradient(135deg, #3b82f6, #ef4444); -webkit-background-clip: text; color: transparent; }
+.lvl-5:hover { 
+    background: linear-gradient(135deg, rgba(202, 138, 4, 0.25), rgba(161, 98, 7, 0.25)); 
+}
+.lvl-5 .lvl-icon { 
+    /* Gradient ikony dopasowany do złota */
+    background: linear-gradient(135deg, #eab308, #a16207); 
+    -webkit-background-clip: text; 
+    color: transparent; 
+}
 
-/* GRA */
+/* --- INTERFEJS GRY --- */
 .game-board {
     display: flex; justify-content: space-between; align-items: stretch;
     background: rgba(0,0,0,0.25); border-radius: 30px; padding: 40px;
@@ -184,7 +196,7 @@ h1 { font-weight: 900; letter-spacing: -2px; margin-bottom: 5px; font-size: 3.5r
 .stat-label { font-size: 0.9rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 2px; }
 .stat-value { font-size: 3rem; font-weight: 900; color: var(--gold); text-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
 
-/* Przyciski w grze */
+/* Przyciski w grze (Wyżej/Niżej) */
 .btn-guess {
     border: none; padding: 18px; border-radius: 16px; font-weight: 800; cursor: pointer; color: white;
     font-size: 1.1rem; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -203,20 +215,23 @@ h1 { font-weight: 900; letter-spacing: -2px; margin-bottom: 5px; font-size: 3.5r
 .highlight { color: white; font-weight: 900; margin-left: 5px; }
 .gold-text { color: var(--gold); font-weight: 900; margin-left: 5px; }
 
+/* Inne elementy UI */
 .btn-text { background: none; border: none; color: var(--text-muted); text-decoration: underline; cursor: pointer; font-size: 0.9rem; }
 .btn-home { position: fixed; top: 25px; left: 25px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 20px; border-radius: 30px; color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; z-index: 1000; backdrop-filter: blur(10px); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 .btn-home:hover { background: rgba(255, 255, 255, 0.25); transform: translateY(-3px); }
 
-/* Modal */
+/* Modal (Koniec gry) */
 .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 100; display: flex; justify-content: center; align-items: center; }
 .modal-content { max-width: 500px; padding: 3rem; border: 2px solid var(--danger); border-radius: 30px; }
 .loss-title { color: var(--danger); font-size: 3rem; margin-bottom: 10px; }
 .loss-reason { margin-bottom: 20px; font-size: 1.3rem; color: #ddd; }
 .btn-restart { background: var(--primary); color: white; border: none; padding: 15px 40px; border-radius: 50px; font-weight: 800; cursor: pointer; font-size: 1.2rem; }
 
+/* Animacje */
 .fade-in { animation: fadeIn 0.5s ease forwards; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
+/* Responsywność */
 @media (max-width: 900px) {
     .glass-panel { width: 95%; padding: 1.5rem; }
     .game-board { flex-direction: column; gap: 30px; padding: 15px; }
