@@ -82,6 +82,23 @@ h1 { font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; font-size: 2.5r
 .score-label { font-size: 0.65rem; color: #aaa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
 .score-value { font-size: 2.2rem; font-weight: 900; color: var(--gold); text-shadow: 0 0 15px rgba(255, 215, 0, 0.4); line-height: 1; }
 
+/* STYLIZACJA INSTRUKCJI IN-LINE */
+.inline-instructions {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 15px;
+    text-align: left;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.instr-title { font-weight: 700; color: #fff; margin-bottom: 8px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+.inline-instructions ul { padding-left: 20px; margin: 0; list-style-type: disc; }
+.inline-instructions li { margin-bottom: 4px; line-height: 1.4; }
+.inline-instructions strong { color: var(--primary); }
+
 /* STYLIZACJA LOGA */
 .logo-wrapper {
     position: relative; width: 100%; height: 220px;
