@@ -158,7 +158,7 @@ const ui = {
 
 /* --- GAME LOGIC --- */
 const game = {
-    config: { maxTries: 6, maxRounds: 8 },
+    config: { maxTries: 6, maxRounds: 10 }, // Ustawiono 10 rund
     state: { 
         mode: null, round: 1, tries: 0, streak: 0, score: 0, 
         currentCode: null, blurPct: 40, countriesList: [], recordBroken: false 
@@ -186,6 +186,17 @@ const game = {
         this.state.round = 1;
         this.state.recordBroken = false;
 
+        // --- ZMIANA TEKSTU PRZYCISKU POWROTU ---
+        const backBtn = document.getElementById('backMenu');
+        const proModes = ['easy', 'hard', 'pro', 'expert'];
+        
+        if (proModes.includes(mode)) {
+            backBtn.textContent = "ZMIEŃ POZIOM TRUDNOŚCI";
+        } else {
+            backBtn.textContent = "ZMIEŃ REGION";
+        }
+        // ----------------------------------------
+
         const smartPool = this.getSmartPool(mode);
         this.state.countriesList = this.shuffle(smartPool).slice(0, this.config.maxRounds);
         localStorage.setItem('lastPlayed_' + mode, JSON.stringify(this.state.countriesList));
@@ -205,8 +216,7 @@ const game = {
         this.state.currentCode = this.state.countriesList[this.state.round - 1];
         this.state.tries = 0;
         
-        // --- LOGIKA BLURA (POPRAWIONA) ---
-        // Tylko tryby PRO mają blur. Kontynenty mają 0.
+        // --- LOGIKA BLURA ---
         const proModes = ['easy', 'hard', 'pro', 'expert'];
         if (proModes.includes(this.state.mode)) {
             this.state.blurPct = 40; // Blur dla PRO
@@ -217,7 +227,10 @@ const game = {
         ui.elements.input.value = '';
         ui.elements.input.disabled = false;
         ui.elements.checkBtn.disabled = false;
-        ui.elements.backBtn.classList.add('hidden');
+        
+        // --- PRZYCISK POWROTU ZAWSZE WIDOCZNY ---
+        ui.elements.backBtn.classList.remove('hidden');
+
         ui.elements.round.textContent = this.state.round;
         ui.elements.msg.textContent = "Zgadnij kraj!";
         ui.elements.msg.style.color = "var(--text-muted)";
@@ -286,16 +299,16 @@ const game = {
                 ui.elements.streak.textContent = 0;
                 this.nextRoundDelay();
             } else {
-                ui.elements.msg.style.color = "var(--warning)";
                 ui.shakeInput();
                 
-                // Zmniejszamy blur TYLKO jeśli był aktywny (czyli > 0)
+                // Zmniejszamy blur TYLKO jeśli był aktywny (tryb PRO)
                 if (this.state.blurPct > 0) {
                     this.state.blurPct = Math.max(0, this.state.blurPct - 8);
                     ui.elements.msg.textContent = "Źle! Obrazek się wyostrza...";
                 } else {
                     ui.elements.msg.textContent = "Źle! Spróbuj jeszcze raz...";
                 }
+                ui.elements.msg.style.color = "var(--warning)";
                 
                 ui.updateBlur(this.state.blurPct, this.state.mode === 'expert');
             }
@@ -315,7 +328,7 @@ const game = {
         ui.elements.progressBar.style.width = '100%';
         ui.elements.msg.textContent = `Koniec! Twój wynik: ${this.state.score}`;
         ui.elements.msg.style.color = "var(--text-main)";
-        ui.elements.backBtn.classList.remove('hidden');
+        // Przycisk powrotu jest już widoczny, więc nic nie trzeba robić
     },
 
     backToMenu() { ui.showMenu(); },

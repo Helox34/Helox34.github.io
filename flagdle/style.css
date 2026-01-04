@@ -74,7 +74,7 @@ h1 { font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; font-size: 2.2r
 .levels-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 10px; width: 100%; }
 .level-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
 
-/* STYLIZACJA PRZYCISKÓW */
+/* STYLIZACJA PRZYCISKÓW POZIOMÓW */
 .btn-level {
     flex: 1; 
     border: none; 
@@ -102,7 +102,6 @@ h1 { font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; font-size: 2.2r
 .btn-europa { background: linear-gradient(135deg, #059669, #10b981); border-color: #34d399; } 
 .btn-azja { background: linear-gradient(135deg, #d97706, #f59e0b); border-color: #fbbf24; } 
 .btn-afryka { background: linear-gradient(135deg, #7c3aed, #8b5cf6); border-color: #a78bfa; } 
-/* Zmiana na niebieski */
 .btn-ameryki { background: linear-gradient(135deg, #0284c7, #2563eb); border-color: #38bdf8; } 
 .btn-swiat { background: linear-gradient(135deg, #7f1d1d, #450a0a); border-color: #ef4444; border: 1px solid rgba(255, 100, 100, 0.3); box-shadow: 0 0 20px rgba(220, 38, 38, 0.15); } 
 
@@ -167,6 +166,38 @@ input:focus { border-color: var(--primary); background: rgba(0,0,0,0.5); }
 .dot.used { background: var(--danger); box-shadow: 0 0 8px var(--danger); }
 .dot.success { background: var(--success); box-shadow: 0 0 8px var(--success); }
 
+/* --- NOWY STYL DLA PRZYCISKU POWROTU (PASTYLKA) --- */
+.btn-text {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: var(--text-muted) !important;
+    padding: 10px 25px !important;
+    border-radius: 50px !important; /* Zaokrąglona pastylka */
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+    margin-top: 25px;
+    display: inline-block; /* Nie zajmuje całej szerokości */
+    width: auto !important;
+}
+
+.btn-text:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-text:active {
+    transform: translateY(0);
+}
+
+/* Stary styl (opcjonalnie do usunięcia, jeśli nie używany indziej) */
 .btn-secondary { background: rgba(255,255,255,0.08); border: none; color: white; padding: 15px 30px; border-radius: 12px; cursor: pointer; font-weight: 600; width: 100%; margin-top: 10px; transition: background 0.2s; }
 .btn-secondary:hover { background: rgba(255,255,255,0.15); }
 
@@ -182,7 +213,7 @@ input:focus { border-color: var(--primary); background: rgba(0,0,0,0.5); }
 .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
 @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
 
-/* Przycisk HOME */
+/* Przycisk HOME (w rogu ekranu) */
 .btn-home { position: fixed; top: 25px; left: 25px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 20px; border-radius: 30px; color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; z-index: 1000; backdrop-filter: blur(10px); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 .btn-home:hover { background: rgba(255, 255, 255, 0.25); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
 
