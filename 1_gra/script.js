@@ -39,19 +39,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function updateMovesUI() {
-        movesContainer.innerHTML = '';
-        for(let i=0; i<MAX_MOVES; i++) {
-            const dot = document.createElement('div');
-            dot.style.width = '12px'; height = '12px';
-            dot.style.borderRadius = '50%';
-            // FIOLET dla dostępnych ruchów
-            dot.style.background = i < movesLeft ? '#8b5cf6' : '#334155';
-            dot.style.display = 'inline-block';
-            dot.style.margin = '0 3px';
-            dot.style.height = '12px'; // fix
-            movesContainer.appendChild(dot);
-        }
+    movesContainer.innerHTML = '';
+    for(let i=0; i<MAX_MOVES; i++) {
+        const dot = document.createElement('div');
+        dot.style.width = '12px'; 
+        dot.style.height = '12px';
+        dot.style.borderRadius = '50%';
+        dot.style.background = i < movesLeft ? '#8b5cf6' : '#334155';
+        dot.style.display = 'inline-block';
+        dot.style.margin = '0 3px';
+        movesContainer.appendChild(dot);
     }
+}
 
     function clearCanvas() {
         ctx.fillStyle = '#0f172a';
