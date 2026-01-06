@@ -1,0 +1,162 @@
+:root {
+    --bg-dark: #0f172a;
+    --glass-bg: rgba(30, 41, 59, 0.95);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    
+    /* Kolory stanów gry */
+    --state-idle: #2b87d1; /* Niebieski z twojego zdjęcia */
+    --state-wait: #ce2636; /* Czerwony */
+    --state-go: #4bdb6a;   /* Zielony */
+    
+    --gold: #FFD700;
+    --text-main: #ffffff;
+    --text-muted: #94a3b8;
+    --font: 'Montserrat', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.bg-animation {
+    position: absolute; width: 200%; height: 200%;
+    background: radial-gradient(circle at 50% 50%, rgba(43, 135, 209, 0.15), transparent 60%);
+    animation: rotateBg 20s linear infinite;
+    z-index: -1;
+}
+@keyframes rotateBg { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* Główna Karta */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 40px;
+    padding: 3rem;
+    width: 95%; 
+    max-width: 800px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+    text-align: center;
+}
+
+.header-area { margin-bottom: 2rem; }
+h1 { font-weight: 900; letter-spacing: -2px; margin-bottom: 5px; font-size: 3rem; }
+.accent { color: var(--state-idle); }
+.subtitle { color: var(--text-muted); font-size: 1.1rem; }
+
+/* OBSZAR GRY (Box Reakcji) */
+.reaction-box {
+    width: 100%;
+    height: 400px; /* Duży obszar do klikania */
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.1s ease, transform 0.1s;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.reaction-box:active { transform: scale(0.98); }
+
+/* Stany gry */
+.state-idle { background-color: var(--state-idle); }
+.state-wait { background-color: var(--state-wait); }
+.state-go { background-color: var(--state-go); }
+
+/* Treść wewnątrz boxa */
+.content {
+    display: flex; flex-direction: column; align-items: center; gap: 15px;
+    pointer-events: none; /* Kliknięcia przechodzą do rodzica */
+}
+
+.icon-large { font-size: 5rem; margin-bottom: 10px; color: rgba(255,255,255,0.9); }
+#main-text { font-size: 2.5rem; font-weight: 900; line-height: 1.2; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+#sub-text { font-size: 1.1rem; opacity: 0.9; max-width: 80%; }
+
+/* Stopka */
+.footer-stats {
+    display: flex; justify-content: center; gap: 40px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 30px;
+    margin-top: 30px;
+}
+.stat-pill { font-size: 1.3rem; color: var(--text-muted); font-weight: 600; }
+.highlight { color: white; font-weight: 900; margin-left: 8px; }
+.gold-text { color: var(--gold); font-weight: 900; margin-left: 8px; }
+
+/* Animacje */
+.fade-in { animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Responsywność */
+@media (max-width: 600px) {
+    .glass-panel { padding: 1.5rem; width: 95%; }
+    .reaction-box { height: 300px; }
+    h1 { font-size: 2.5rem; }
+    #main-text { font-size: 1.8rem; }
+    .icon-large { font-size: 3.5rem; }
+}
+/* --- PRZYCISK POWROTU (HOME) --- */
+.btn-home {
+    position: fixed; /* Przyklejony do ekranu */
+    top: 25px;
+    left: 25px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 20px;
+    border-radius: 30px;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000; /* Zawsze na wierzchu */
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.btn-home:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.btn-home i {
+    font-size: 1rem;
+}
+
+/* Responsywność - na telefonach tylko ikona */
+@media (max-width: 600px) {
+    .btn-home {
+        top: 15px;
+        left: 15px;
+        padding: 12px; /* Kwadratowy przycisk */
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        justify-content: center;
+    }
+    
+    .btn-home span {
+        display: none; /* Ukryj napis "MENU" na małym ekranie */
+    }
+    
+    .btn-home i {
+        font-size: 1.1rem;
+    }
+}

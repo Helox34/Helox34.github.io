@@ -1,31 +1,88 @@
 <!DOCTYPE html>
 <html lang="pl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FitPlan AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-      body {
-        font-family: 'Inter', sans-serif;
-        background-color: #f3f4f6;
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
-    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
-  }
-}
-</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Quiz Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+<body>
+
+    <div class="bg-animation"></div>
+
+    <div class="main-container">
+        
+        <header class="hub-header fade-in">
+            <h1 class="main-title">GAME <span class="accent-text">HUB</span></h1>
+            <p class="subtitle">Wybierz wyzwanie i pobij rekordy</p>
+        </header>
+
+        <div class="games-grid">
+            
+            <a href="flagdle/index.html" class="game-card card-flagdle fade-in-stagger">
+                <div class="card-icon"><i class="fa-solid fa-flag"></i></div>
+                <div class="card-content">
+                    <h2>FLAGDLE</h2>
+                    <p>Zgadnij kraj po zamazanej fladze.</p>
+                </div>
+                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+
+            <a href="population_higher-lower/index.html" class="game-card card-popdle fade-in-stagger">
+                <div class="card-icon"><i class="fa-solid fa-users"></i></div>
+                <div class="card-content">
+                    <h2>POPDLE</h2>
+                    <p>Kto ma większą populację?</p>
+                </div>
+                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+
+            <a href="logodle/index.html" class="game-card card-logodle fade-in-stagger">
+                <div class="card-icon"><i class="fa-solid fa-shapes"></i></div>
+                <div class="card-content">
+                    <h2>LOGODLE</h2>
+                    <p>Rozpoznaj markę po fragmencie.</p>
+                </div>
+                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+
+            <a href="items_higher-lower/index.html" class="game-card card-pricedle fade-in-stagger">
+                <div class="card-icon"><i class="fa-solid fa-tag"></i></div>
+                <div class="card-content">
+                    <h2>PRICEDLE</h2>
+                    <p>Co kosztuje więcej?</p>
+                </div>
+                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+
+            <a href="Chronodle/index.html" class="game-card card-chronodle fade-in-stagger">
+                <div class="card-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                <div class="card-content">
+                    <h2>CHRONODLE</h2>
+                    <p>Co wydarzyło się wcześniej?</p>
+                </div>
+                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+
+            <a href="reaction_time/index.html" class="game-card card-reaction fade-in-stagger">
+                <div class="card-icon"><i class="fa-solid fa-bolt"></i></div>
+                <div class="card-content">
+                    <h2>REACTION</h2>
+                    <p>Test czasu reakcji.</p>
+                </div>
+                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+
+        </div>
+
+        <footer class="hub-footer fade-in">
+            <p>©Bartłomiej Piwowarczyk &bull; 2026</p>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
 </html>
