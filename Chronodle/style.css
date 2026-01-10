@@ -216,13 +216,43 @@ h1 { font-weight: 900; letter-spacing: -2px; margin-bottom: 5px; font-size: 3.5r
 .gold-text { color: var(--gold); font-weight: 900; margin-left: 5px; }
 
 /* Inne elementy UI */
-.btn-text { background: none; border: none; color: var(--text-muted); text-decoration: underline; cursor: pointer; font-size: 0.9rem; }
+/* --- NOWY STYL DLA PRZYCISKU POWROTU (PASTYLKA) --- */
+.btn-text {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: var(--text-muted) !important;
+    padding: 10px 25px !important;
+    border-radius: 50px !important; /* Zaokrąglona pastylka */
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+    margin-top: 25px;
+    display: inline-block; /* Nie zajmuje całej szerokości */
+    width: auto !important;
+}
+
+.btn-text:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-text:active {
+    transform: translateY(0);
+}
+
 .btn-home { position: fixed; top: 25px; left: 25px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 20px; border-radius: 30px; color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; z-index: 1000; backdrop-filter: blur(10px); transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-.btn-home:hover { background: rgba(255, 255, 255, 0.25); transform: translateY(-3px); }
+.btn-home:hover { background: rgba(255, 255, 255, 0.25); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
 
 /* Modal (Koniec gry) */
 .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 100; display: flex; justify-content: center; align-items: center; }
-.modal-content { max-width: 500px; padding: 3rem; border: 2px solid var(--danger); border-radius: 30px; }
+.modal-content { max-width: 500px; padding: 3rem; border: 2px solid var(--danger); border-radius: 30px; width: 90%; }
 .loss-title { color: var(--danger); font-size: 3rem; margin-bottom: 10px; }
 .loss-reason { margin-bottom: 20px; font-size: 1.3rem; color: #ddd; }
 .btn-restart { background: var(--primary); color: white; border: none; padding: 15px 40px; border-radius: 50px; font-weight: 800; cursor: pointer; font-size: 1.2rem; }
@@ -233,12 +263,26 @@ h1 { font-weight: 900; letter-spacing: -2px; margin-bottom: 5px; font-size: 3.5r
 
 /* Responsywność */
 @media (max-width: 900px) {
-    .glass-panel { width: 95%; padding: 1.5rem; }
-    .game-board { flex-direction: column; gap: 30px; padding: 15px; }
-    .vs-circle { top: 48%; }
-    .img-container { height: 180px; }
-    .levels-grid { grid-template-columns: 1fr; }
-    h1 { font-size: 2.5rem; }
+    .glass-panel { width: 95%; padding: 1.5rem; margin-top: 60px; }
+    .game-board { flex-direction: column; gap: 30px; padding: 15px; min-height: auto; }
+    .vs-circle { position: relative; top: auto; left: auto; transform: none; margin: -15px auto; width: 50px; height: 50px; font-size: 1rem; }
+    .img-container { height: 160px; }
+    .levels-grid { grid-template-columns: 1fr; gap: 15px; }
+    h1 { font-size: 2.2rem; }
+    
+    .btn-level { min-height: 80px; padding: 15px; }
+    .lvl-icon { width: 40px; height: 40px; font-size: 1.2rem; }
+    .lvl-name { font-size: 1rem; }
+    .rec-val { font-size: 1.3rem; }
+    
     .btn-home { top: 15px; left: 15px; width: 45px; height: 45px; padding: 0; justify-content: center; }
     .btn-home span { display: none; }
+    
+    .country-box { padding: 5px; }
+    .item-name { font-size: 1.2rem; min-height: 50px; margin-bottom: 10px; }
+    .stat-container { min-height: 100px; padding: 15px; }
+    .stat-value { font-size: 2rem; }
+    
+    .btns-row { max-width: 100%; }
+    .btn-guess { padding: 15px; font-size: 1rem; }
 }
