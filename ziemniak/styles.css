@@ -8,11 +8,11 @@
     --green-correct: #4CAF50;
     --beige-light: #F5E6D3;
     --yellow-light: #FFF9E6;
-    
+
     --radius-button: 24px;
     --radius-card: 20px;
     --radius-input: 12px;
-    
+
     --shadow-card: 0 4px 12px rgba(93, 64, 55, 0.1);
     --shadow-button: 0 2px 8px rgba(251, 192, 45, 0.3);
 }
@@ -47,8 +47,15 @@ body {
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 /* Title */
@@ -83,8 +90,15 @@ body {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Card */
@@ -334,8 +348,10 @@ body {
 
 .button-row .btn {
     flex: 1;
-    width: auto; /* Override btn-large */
-    margin-top: 0; /* Override btn-large */
+    width: auto;
+    /* Override btn-large */
+    margin-top: 0;
+    /* Override btn-large */
 }
 
 /* Loading Screen */
@@ -353,8 +369,15 @@ body {
 }
 
 @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
 }
 
 .loading-text {
@@ -408,8 +431,15 @@ body {
 }
 
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
 }
 
 .game-content {
@@ -523,9 +553,19 @@ body {
 }
 
 @keyframes boom {
-    0% { transform: scale(0); opacity: 0; }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); opacity: 1; }
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .gameover-title {
@@ -554,16 +594,58 @@ body {
     .game-title {
         font-size: 36px;
     }
-    
+
     .category-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .timer-display {
         font-size: 24px;
     }
-    
+
     .current-player {
         font-size: 28px;
     }
+
+    .btn-home {
+        top: 15px !important;
+        left: 15px !important;
+        width: 45px;
+        height: 45px;
+        padding: 0 !important;
+        justify-content: center;
+    }
+
+    .btn-home span {
+        display: none;
+    }
+}
+
+/* Home Button Style (Imported from Chronodle) */
+.btn-home {
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    background: rgba(93, 64, 55, 0.1);
+    /* Adapted to Ziemniak theme */
+    border: 1px solid rgba(93, 64, 55, 0.2);
+    padding: 12px 20px;
+    border-radius: 30px;
+    color: var(--brown-dark);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-home:hover {
+    background: rgba(93, 64, 55, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
