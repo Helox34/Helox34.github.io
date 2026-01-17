@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- System użytkowników -->
+    <script src="../user-manager.js"></script>
+    <script src="../leaderboard-component.js"></script>
 </head>
+
 <body>
     <a href="../index.html" class="btn-home">
         <i class="fa-solid fa-house"></i> <span>MENU</span>
@@ -32,8 +37,12 @@
             <div class="stat-pill">Ostatni: <span id="last-score" class="highlight">- ms</span></div>
             <div class="stat-pill">Rekord: <span id="best-score" class="gold-text">- ms</span></div>
         </div>
+
+        <!-- Tabela rankingowa -->
+        <div id="leaderboard-container"></div>
     </div>
 
     <script src="script.js"></script>
 </body>
+
 </html>

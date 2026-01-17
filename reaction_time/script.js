@@ -17,6 +17,14 @@ let endTime = 0;
 function init() {
     const best = localStorage.getItem('reaction_best') || '-';
     ui.bestScore.textContent = best === '-' ? '-' : best + ' ms';
+
+    // Renderuj tabelę rankingową
+    if (typeof LeaderboardComponent !== 'undefined') {
+        LeaderboardComponent.render('reaction_best', 'leaderboard-container', {
+            title: 'TOP 10 NAJLEPSZYCH CZASÓW',
+            limit: 10
+        });
+    }
 }
 
 // Główna funkcja obsługi kliknięcia
@@ -44,13 +52,13 @@ function handleClick() {
 
 function startTest() {
     gameState = 'waiting';
-    
+
     // Zmiana wyglądu na czerwony
     setVisuals('state-wait', 'fa-hourglass', 'Czekaj na zielony...', 'Nie klikaj jeszcze!');
-    
+
     // Losowy czas oczekiwania: od 2000ms (2s) do 5000ms (5s)
     const randomDelay = Math.floor(Math.random() * 3000) + 2000;
-    
+
     timer = setTimeout(() => {
         turnGreen();
     }, randomDelay);
@@ -66,11 +74,11 @@ function endTest() {
     endTime = Date.now();
     const reactionTime = endTime - startTime;
     gameState = 'result';
-    
+
     // Aktualizacja wyniku
     ui.lastScore.textContent = reactionTime + ' ms';
     checkBestScore(reactionTime);
-    
+
     setVisuals('state-idle', 'fa-clock', reactionTime + ' ms', 'Kliknij, aby spróbować ponownie');
 }
 
@@ -82,10 +90,23 @@ function tooEarly() {
 
 function checkBestScore(time) {
     let currentBest = localStorage.getItem('reaction_best');
-    
+
     if (!currentBest || time < parseInt(currentBest)) {
         localStorage.setItem('reaction_best', time);
         ui.bestScore.textContent = time + ' ms';
+
+        // Zapisz wynik do systemu użytkowników
+        if (typeof UserManager !== 'undefined') {
+            UserManager.saveUserScore('reaction_best', time);
+
+            // Odśwież tabelę rankingową
+            if (typeof LeaderboardComponent !== 'undefined') {
+                LeaderboardComponent.render('reaction_best', 'leaderboard-container', {
+                    title: 'TOP 10 NAJLEPSZYCH CZASÓW',
+                    limit: 10
+                });
+            }
+        }
     }
 }
 
@@ -94,10 +115,10 @@ function setVisuals(className, iconClass, title, subtitle) {
     // Reset klas
     ui.box.classList.remove('state-idle', 'state-wait', 'state-go');
     ui.box.classList.add(className);
-    
+
     // Zmiana ikony
     ui.icon.className = `fa-solid ${iconClass} icon-large`;
-    
+
     // Zmiana tekstu
     ui.mainText.textContent = title;
     ui.subText.textContent = subtitle;

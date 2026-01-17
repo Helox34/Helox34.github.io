@@ -12,6 +12,21 @@
 
 <body>
 
+    <!-- Modal wprowadzania nazwy użytkownika -->
+    <div id="username-modal" class="hidden">
+        <div class="username-card">
+            <div class="username-header">
+                <h2>Witaj w Game Hub!</h2>
+                <p>Podaj swoją nazwę, aby zapisywać wyniki</p>
+            </div>
+            <div class="username-input-group">
+                <input type="text" id="username-input" placeholder="Twoja nazwa..." maxlength="20" autocomplete="off">
+                <span id="username-error" class="hidden"></span>
+            </div>
+            <button id="username-submit">ZACZNIJ GRĘ</button>
+        </div>
+    </div>
+
     <div class="bg-animation"></div>
 
     <div class="main-container">
@@ -96,6 +111,8 @@
 
     </div>
 
+    <!-- System zarządzania użytkownikami -->
+    <script src="user-manager.js"></script>
     <script src="script.js"></script>
 </body>
 
