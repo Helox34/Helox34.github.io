@@ -25,14 +25,27 @@
 }
 
 body {
-    background-color: var(--bg-dark);
-    color: var(--text-main);
-    font-family: var(--font);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    height: auto;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    font-family: 'Montserrat', sans-serif;
+    color: white;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    overflow: hidden;
+    align-items: flex-start;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Fix dla mobile - upewnij się że scroll działa */
+html {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .bg-animation {

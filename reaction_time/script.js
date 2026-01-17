@@ -95,9 +95,9 @@ function checkBestScore(time) {
         localStorage.setItem('reaction_best', time);
         ui.bestScore.textContent = time + ' ms';
 
-        // Zapisz wynik do systemu użytkowników
+        // Zapisz wynik do systemu użytkowników (mniejszy czas = lepszy wynik!)
         if (typeof UserManager !== 'undefined') {
-            UserManager.saveUserScore('reaction_best', time);
+            UserManager.saveUserScore('reaction_best', time, true); // TRUE = lower is better
 
             // Odśwież tabelę rankingową
             if (typeof LeaderboardComponent !== 'undefined') {

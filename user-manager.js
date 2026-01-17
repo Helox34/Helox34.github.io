@@ -129,8 +129,9 @@ const UserManager = {
      * Zapisuje wynik użytkownika dla danej gry
      * @param {string} scoreKey - Klucz wyniku (np. 'reaction_best', 'bestScore_europa')
      * @param {number} score - Wynik do zapisania
+     * @param {boolean} lowerIsBetter - Czy mniejsza wartość = lepszy wynik (domyślnie false)
      */
-    saveUserScore(scoreKey, score) {
+    saveUserScore(scoreKey, score, lowerIsBetter = false) {
         const username = this.getCurrentUser();
         if (!username) {
             console.warn('No user logged in, cannot save score');
@@ -150,13 +151,32 @@ const UserManager = {
         const currentScore = users[username].scores[scoreKey];
 
         // Zapisz tylko jeśli to nowy rekord lub pierwsza próba
-        if (!currentScore || score > currentScore.score) {
+        let isNewRecord = false;
+
+        if (!currentScore) {
+            // Pierwsza próba - zawsze zapisz
+            isNewRecord = true;
+        } else {
+            // Sprawdź czy to lepszy wynik
+            if (lowerIsBetter) {
+                // Dla Reaction Time: mniejsza wartość = lepiej
+                isNewRecord = score < currentScore.score;
+            } else {
+                // Dla innych gier: większa wartość = lepiej
+                isNewRecord = score > currentScore.score;
+            }
+        }
+
+        if (isNewRecord) {
             users[username].scores[scoreKey] = {
                 score: score,
                 date: new Date().toISOString()
             };
             this.saveAllUsers(users);
+            return true; // Zwróć true jeśli zapisano nowy rekord
         }
+
+        return false; // Zwróć false jeśli nie zapisano
     },
 
     /**

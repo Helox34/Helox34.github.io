@@ -1,49 +1,49 @@
 /* --- BAZA DANYCH (TIERY) --- */
 const allCountries = {
-    "AF": ["Afganistan"], "AL": ["Albania"], "DZ": ["Algieria"], "AD": ["Andora"], "AO": ["Angola"], 
-    "AG": ["Antigua i Barbuda"], "SA": ["Arabia Saudyjska"], "AR": ["Argentyna"], "AM": ["Armenia"], "AU": ["Australia"], 
-    "AT": ["Austria"], "AZ": ["Azerbejdżan"], "BS": ["Bahamy"], "BH": ["Bahrajn"], "BD": ["Bangladesz"], "BB": ["Barbados"], 
-    "BE": ["Belgia"], "BZ": ["Belize"], "BJ": ["Benin"], "BT": ["Bhutan"], "BO": ["Boliwia"], "BA": ["Bośnia i Hercegowina"], 
-    "BW": ["Botswana"], "BR": ["Brazylia"], "BN": ["Brunei"], "BG": ["Bułgaria"], "BF": ["Burkina Faso"], "BI": ["Burundi"], 
-    "CL": ["Chile"], "CN": ["Chiny"], "HR": ["Chorwacja"], "CY": ["Cypr"], "TD": ["Czad"], "ME": ["Czarnogóra"], 
-    "CZ": ["Czechy"], "DK": ["Dania"], "CD": ["Demokratyczna Republika Konga"], "DM": ["Dominika"], "DO": ["Dominikana"], 
-    "DJ": ["Dżibuti"], "EG": ["Egipt"], "EC": ["Ekwador"], "ER": ["Erytrea"], "EE": ["Estonia"], "ET": ["Etiopia"], 
-    "FJ": ["Fidżi"], "PH": ["Filipiny"], "FI": ["Finlandia"], "FR": ["Francja"], "GA": ["Gabon"], "GM": ["Gambia"], 
-    "GH": ["Ghana"], "GR": ["Grecja"], "GD": ["Grenada"], "GE": ["Gruzja"], "GY": ["Gujana"], "GT": ["Gwatemala"], 
-    "GN": ["Gwinea"], "GW": ["Gwinea Bissau"], "GQ": ["Gwinea Równikowa"], "HT": ["Haiti"], "ES": ["Hiszpania"], 
-    "NL": ["Holandia"], "HN": ["Honduras"], "IN": ["Indie"], "ID": ["Indonezja"], "IQ": ["Irak"], "IR": ["Iran"], 
-    "IE": ["Irlandia"], "IS": ["Islandia"], "IL": ["Izrael"], "JM": ["Jamajka"], "JP": ["Japonia"], "YE": ["Jemen"], 
-    "JO": ["Jordania"], "KH": ["Kambodża"], "CM": ["Kamerun"], "CA": ["Kanada"], "QA": ["Katar"], "KZ": ["Kazachstan"], 
-    "KE": ["Kenia"], "KG": ["Kirgistan"], "KI": ["Kiribati"], "CO": ["Kolumbia"], "KM": ["Komory"], "CG": ["Kongo"], 
-    "KR": ["Korea Południowa"], "KP": ["Korea Północna"], "CR": ["Kostaryka"], "CU": ["Kuba"], "KW": ["Kuwejt"], 
-    "LA": ["Laos"], "LS": ["Lesotho"], "LB": ["Liban"], "LR": ["Liberia"], "LY": ["Libia"], "LI": ["Liechtenstein"], 
-    "LT": ["Litwa"], "LU": ["Luksemburg"], "LV": ["Łotwa"], "MK": ["Macedonia Północna"], "MG": ["Madagaskar"], 
-    "MW": ["Malawi"], "MV": ["Malediwy"], "MY": ["Malezja"], "ML": ["Mali"], "MT": ["Malta"], "MA": ["Maroko"], 
-    "MR": ["Mauretania"], "MU": ["Mauritius"], "MX": ["Meksyk"], "FM": ["Mikronezja"], "MM": ["Mjanma", "Birma"], 
-    "MD": ["Mołdawia"], "MC": ["Monako"], "MN": ["Mongolia"], "MZ": ["Mozambik"], "NA": ["Namibia"], "NR": ["Nauru"], 
-    "NP": ["Nepal"], "DE": ["Niemcy"], "NE": ["Niger"], "NG": ["Nigeria"], "NI": ["Nikaragua"], "NO": ["Norwegia"], 
-    "NZ": ["Nowa Zelandia"], "OM": ["Oman"], "PK": ["Pakistan"], "PW": ["Palau"], "PA": ["Panama"], "PG": ["Papua-Nowa Gwinea"], 
-    "PY": ["Paragwaj"], "PE": ["Peru"], "PL": ["Polska"], "PT": ["Portugalia"], "ZA": ["RPA", "Republika Południowej Afryki"], 
-    "CV": ["Republika Zielonego Przylądka"], "CF": ["Republika Środkowoafrykańska"], "RU": ["Rosja"], "RO": ["Rumunia"], 
-    "RW": ["Ruanda"], "KN": ["Saint Kitts i Nevis"], "LC": ["Saint Lucia"], "VC": ["Saint Vincent i Grenadyny"], 
-    "SV": ["Salwador"], "WS": ["Samoa"], "SM": ["San Marino"], "SN": ["Senegal"], "RS": ["Serbia"], "SC": ["Seszele"], 
-    "SL": ["Sierra Leone"], "SG": ["Singapur"], "SK": ["Słowacja"], "SI": ["Słowenia"], "SO": ["Somalia"], 
-    "LK": ["Sri Lanka"], "US": ["Stany Zjednoczone", "USA"], "SZ": ["Eswatini"], "SD": ["Sudan"], "SS": ["Sudan Południowy"], 
-    "SR": ["Surinam"], "SY": ["Syria"], "CH": ["Szwajcaria"], "SE": ["Szwecja"], "TJ": ["Tadżykistan"], "TH": ["Tajlandia"], 
-    "TZ": ["Tanzania"], "TL": ["Timor Wschodni"], "TG": ["Togo"], "TO": ["Tonga"], "TT": ["Trynidad i Tobago"], 
-    "TN": ["Tunezja"], "TR": ["Turcja"], "TM": ["Turkmenistan"], "TV": ["Tuvalu"], "UG": ["Uganda"], "UA": ["Ukraina"], 
-    "UY": ["Urugwaj"], "UZ": ["Uzbekistan"], "VU": ["Vanuatu"], "VA": ["Watykan"], "VE": ["Wenezuela"], "HU": ["Węgry"], 
-    "GB": ["Wielka Brytania", "Anglia", "UK"], "VN": ["Wietnam"], "IT": ["Włochy"], "CI": ["Wybrzeże Kości Słoniowej"], 
-    "MH": ["Wyspy Marshalla"], "SB": ["Wyspy Salomona"], "ST": ["Wyspy Świętego Tomasza i Książęca"], "ZM": ["Zambia"], 
+    "AF": ["Afganistan"], "AL": ["Albania"], "DZ": ["Algieria"], "AD": ["Andora"], "AO": ["Angola"],
+    "AG": ["Antigua i Barbuda"], "SA": ["Arabia Saudyjska"], "AR": ["Argentyna"], "AM": ["Armenia"], "AU": ["Australia"],
+    "AT": ["Austria"], "AZ": ["Azerbejdżan"], "BS": ["Bahamy"], "BH": ["Bahrajn"], "BD": ["Bangladesz"], "BB": ["Barbados"],
+    "BE": ["Belgia"], "BZ": ["Belize"], "BJ": ["Benin"], "BT": ["Bhutan"], "BO": ["Boliwia"], "BA": ["Bośnia i Hercegowina"],
+    "BW": ["Botswana"], "BR": ["Brazylia"], "BN": ["Brunei"], "BG": ["Bułgaria"], "BF": ["Burkina Faso"], "BI": ["Burundi"],
+    "CL": ["Chile"], "CN": ["Chiny"], "HR": ["Chorwacja"], "CY": ["Cypr"], "TD": ["Czad"], "ME": ["Czarnogóra"],
+    "CZ": ["Czechy"], "DK": ["Dania"], "CD": ["Demokratyczna Republika Konga"], "DM": ["Dominika"], "DO": ["Dominikana"],
+    "DJ": ["Dżibuti"], "EG": ["Egipt"], "EC": ["Ekwador"], "ER": ["Erytrea"], "EE": ["Estonia"], "ET": ["Etiopia"],
+    "FJ": ["Fidżi"], "PH": ["Filipiny"], "FI": ["Finlandia"], "FR": ["Francja"], "GA": ["Gabon"], "GM": ["Gambia"],
+    "GH": ["Ghana"], "GR": ["Grecja"], "GD": ["Grenada"], "GE": ["Gruzja"], "GY": ["Gujana"], "GT": ["Gwatemala"],
+    "GN": ["Gwinea"], "GW": ["Gwinea Bissau"], "GQ": ["Gwinea Równikowa"], "HT": ["Haiti"], "ES": ["Hiszpania"],
+    "NL": ["Holandia"], "HN": ["Honduras"], "IN": ["Indie"], "ID": ["Indonezja"], "IQ": ["Irak"], "IR": ["Iran"],
+    "IE": ["Irlandia"], "IS": ["Islandia"], "IL": ["Izrael"], "JM": ["Jamajka"], "JP": ["Japonia"], "YE": ["Jemen"],
+    "JO": ["Jordania"], "KH": ["Kambodża"], "CM": ["Kamerun"], "CA": ["Kanada"], "QA": ["Katar"], "KZ": ["Kazachstan"],
+    "KE": ["Kenia"], "KG": ["Kirgistan"], "KI": ["Kiribati"], "CO": ["Kolumbia"], "KM": ["Komory"], "CG": ["Kongo"],
+    "KR": ["Korea Południowa"], "KP": ["Korea Północna"], "CR": ["Kostaryka"], "CU": ["Kuba"], "KW": ["Kuwejt"],
+    "LA": ["Laos"], "LS": ["Lesotho"], "LB": ["Liban"], "LR": ["Liberia"], "LY": ["Libia"], "LI": ["Liechtenstein"],
+    "LT": ["Litwa"], "LU": ["Luksemburg"], "LV": ["Łotwa"], "MK": ["Macedonia Północna"], "MG": ["Madagaskar"],
+    "MW": ["Malawi"], "MV": ["Malediwy"], "MY": ["Malezja"], "ML": ["Mali"], "MT": ["Malta"], "MA": ["Maroko"],
+    "MR": ["Mauretania"], "MU": ["Mauritius"], "MX": ["Meksyk"], "FM": ["Mikronezja"], "MM": ["Mjanma", "Birma"],
+    "MD": ["Mołdawia"], "MC": ["Monako"], "MN": ["Mongolia"], "MZ": ["Mozambik"], "NA": ["Namibia"], "NR": ["Nauru"],
+    "NP": ["Nepal"], "DE": ["Niemcy"], "NE": ["Niger"], "NG": ["Nigeria"], "NI": ["Nikaragua"], "NO": ["Norwegia"],
+    "NZ": ["Nowa Zelandia"], "OM": ["Oman"], "PK": ["Pakistan"], "PW": ["Palau"], "PA": ["Panama"], "PG": ["Papua-Nowa Gwinea"],
+    "PY": ["Paragwaj"], "PE": ["Peru"], "PL": ["Polska"], "PT": ["Portugalia"], "ZA": ["RPA", "Republika Południowej Afryki"],
+    "CV": ["Republika Zielonego Przylądka"], "CF": ["Republika Środkowoafrykańska"], "RU": ["Rosja"], "RO": ["Rumunia"],
+    "RW": ["Ruanda"], "KN": ["Saint Kitts i Nevis"], "LC": ["Saint Lucia"], "VC": ["Saint Vincent i Grenadyny"],
+    "SV": ["Salwador"], "WS": ["Samoa"], "SM": ["San Marino"], "SN": ["Senegal"], "RS": ["Serbia"], "SC": ["Seszele"],
+    "SL": ["Sierra Leone"], "SG": ["Singapur"], "SK": ["Słowacja"], "SI": ["Słowenia"], "SO": ["Somalia"],
+    "LK": ["Sri Lanka"], "US": ["Stany Zjednoczone", "USA"], "SZ": ["Eswatini"], "SD": ["Sudan"], "SS": ["Sudan Południowy"],
+    "SR": ["Surinam"], "SY": ["Syria"], "CH": ["Szwajcaria"], "SE": ["Szwecja"], "TJ": ["Tadżykistan"], "TH": ["Tajlandia"],
+    "TZ": ["Tanzania"], "TL": ["Timor Wschodni"], "TG": ["Togo"], "TO": ["Tonga"], "TT": ["Trynidad i Tobago"],
+    "TN": ["Tunezja"], "TR": ["Turcja"], "TM": ["Turkmenistan"], "TV": ["Tuvalu"], "UG": ["Uganda"], "UA": ["Ukraina"],
+    "UY": ["Urugwaj"], "UZ": ["Uzbekistan"], "VU": ["Vanuatu"], "VA": ["Watykan"], "VE": ["Wenezuela"], "HU": ["Węgry"],
+    "GB": ["Wielka Brytania", "Anglia", "UK"], "VN": ["Wietnam"], "IT": ["Włochy"], "CI": ["Wybrzeże Kości Słoniowej"],
+    "MH": ["Wyspy Marshalla"], "SB": ["Wyspy Salomona"], "ST": ["Wyspy Świętego Tomasza i Książęca"], "ZM": ["Zambia"],
     "ZW": ["Zimbabwe"], "AE": ["Zjednoczone Emiraty Arabskie"]
 };
 
 // PODZIAŁ NA KONTYNENTY
-const europeCodes = ["AL","AD","AT","BY","BE","BA","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IS","IE","IT","LV","LI","LT","LU","MT","MD","MC","ME","NL","MK","NO","PL","PT","RO","RU","SM","RS","SK","SI","ES","SE","CH","UA","GB","VA"];
-const asiaCodes = ["AF","AM","AZ","BH","BD","BT","BN","KH","CN","GE","IN","ID","IR","IQ","IL","JP","JO","KZ","KW","KG","LA","LB","MY","MV","MN","MM","NP","KP","KR","OM","PK","PH","QA","SA","SG","LK","SY","TJ","TH","TL","TR","TM","AE","UZ","VN","YE"];
-const africaCodes = ["DZ","AO","BJ","BW","BF","BI","CM","CV","CF","TD","KM","CG","CD","DJ","EG","GQ","ER","SZ","ET","GA","GM","GH","GN","GW","CI","KE","LS","LR","LY","MG","MW","ML","MR","MU","MA","MZ","NA","NE","NG","RW","ST","SN","SC","SL","SO","ZA","SS","SD","TZ","TG","TN","UG","ZM","ZW"];
-const americasCodes = ["AG","AR","BS","BB","BZ","BO","BR","CA","CL","CO","CR","CU","DM","DO","EC","SV","GD","GT","GY","HT","HN","JM","MX","NI","PA","PY","PE","KN","LC","VC","SR","TT","US","UY","VE"];
-const oceaniaCodes = ["AU","FJ","KI","MH","FM","NR","NZ","PW","PG","WS","SB","TO","TV","VU"];
+const europeCodes = ["AL", "AD", "AT", "BY", "BE", "BA", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IS", "IE", "IT", "LV", "LI", "LT", "LU", "MT", "MD", "MC", "ME", "NL", "MK", "NO", "PL", "PT", "RO", "RU", "SM", "RS", "SK", "SI", "ES", "SE", "CH", "UA", "GB", "VA"];
+const asiaCodes = ["AF", "AM", "AZ", "BH", "BD", "BT", "BN", "KH", "CN", "GE", "IN", "ID", "IR", "IQ", "IL", "JP", "JO", "KZ", "KW", "KG", "LA", "LB", "MY", "MV", "MN", "MM", "NP", "KP", "KR", "OM", "PK", "PH", "QA", "SA", "SG", "LK", "SY", "TJ", "TH", "TL", "TR", "TM", "AE", "UZ", "VN", "YE"];
+const africaCodes = ["DZ", "AO", "BJ", "BW", "BF", "BI", "CM", "CV", "CF", "TD", "KM", "CG", "CD", "DJ", "EG", "GQ", "ER", "SZ", "ET", "GA", "GM", "GH", "GN", "GW", "CI", "KE", "LS", "LR", "LY", "MG", "MW", "ML", "MR", "MU", "MA", "MZ", "NA", "NE", "NG", "RW", "ST", "SN", "SC", "SL", "SO", "ZA", "SS", "SD", "TZ", "TG", "TN", "UG", "ZM", "ZW"];
+const americasCodes = ["AG", "AR", "BS", "BB", "BZ", "BO", "BR", "CA", "CL", "CO", "CR", "CU", "DM", "DO", "EC", "SV", "GD", "GT", "GY", "HT", "HN", "JM", "MX", "NI", "PA", "PY", "PE", "KN", "LC", "VC", "SR", "TT", "US", "UY", "VE"];
+const oceaniaCodes = ["AU", "FJ", "KI", "MH", "FM", "NR", "NZ", "PW", "PG", "WS", "SB", "TO", "TV", "VU"];
 
 // Definicja Tierów (Trudność)
 const tier1Codes = ["PL", "DE", "FR", "IT", "ES", "GB", "US", "JP", "CN", "RU", "BR", "CA", "AU", "IN", "GR", "TR", "EG", "UA", "CH", "SE"];
@@ -64,12 +64,12 @@ const countriesData = {
     hard: getSubset([...tier1Codes, ...tier2Codes]),
     pro: getSubset([...tier2Codes, ...tier3Codes]),
     expert: getSubset([...tier3Codes, ...tier4Codes]),
-    
+
     // Kontynenty (Wersja Normalna)
     europa: getSubset(europeCodes),
     azja: getSubset(asiaCodes),
     afryka: getSubset(africaCodes),
-    ameryki: getSubset([...americasCodes, ...oceaniaCodes]), 
+    ameryki: getSubset([...americasCodes, ...oceaniaCodes]),
     swiat: getSubset(Object.keys(allCountries))
 };
 
@@ -105,6 +105,20 @@ const ui = {
         });
     },
 
+    renderLeaderboard(mode) {
+        if (typeof LeaderboardComponent !== 'undefined') {
+            const modeNames = {
+                'europa': 'EUROPA', 'azja': 'AZJA', 'afryka': 'AFRYKA',
+                'ameryki': 'AMERYKI', 'swiat': 'CAŁY ŚWIAT',
+                'easy': 'ŁATWY', 'hard': 'ŚREDNI', 'pro': 'TRUDNY', 'expert': 'EKSPERT'
+            };
+            LeaderboardComponent.render(`bestScore_${mode}`, 'leaderboard-container', {
+                title: `TOP 10 - ${modeNames[mode]}`,
+                limit: 10
+            });
+        }
+    },
+
     showGame() {
         this.elements.screens.menu.classList.add('hidden');
         this.elements.screens.game.classList.remove('hidden');
@@ -118,7 +132,7 @@ const ui = {
     },
 
     updateBlur(pct, isGray) {
-        const px = (pct / 2); 
+        const px = (pct / 2);
         let filter = `blur(${px}px)`;
         if (isGray) filter += ' grayscale(100%)';
         this.elements.flag.style.filter = filter;
@@ -140,7 +154,7 @@ const ui = {
         void el.offsetWidth;
         el.classList.add('anim-popup');
     },
-    
+
     showRecordAnimation() {
         const el = this.elements.recordAnim;
         el.classList.remove('hidden');
@@ -159,9 +173,9 @@ const ui = {
 /* --- GAME LOGIC --- */
 const game = {
     config: { maxTries: 6, maxRounds: 10 }, // Ustawiono 10 rund
-    state: { 
-        mode: null, round: 1, tries: 0, streak: 0, score: 0, 
-        currentCode: null, blurPct: 40, countriesList: [], recordBroken: false 
+    state: {
+        mode: null, round: 1, tries: 0, streak: 0, score: 0,
+        currentCode: null, blurPct: 40, countriesList: [], recordBroken: false
     },
     countryNames: [],
 
@@ -170,7 +184,7 @@ const game = {
         const allCodes = Object.keys(source);
         const lastPlayed = JSON.parse(localStorage.getItem('lastPlayed_' + mode) || '[]');
         let candidates = allCodes.filter(code => !lastPlayed.includes(code));
-        
+
         if (candidates.length < this.config.maxRounds) {
             const needed = this.config.maxRounds - candidates.length;
             const recycled = this.shuffle(lastPlayed).slice(0, needed);
@@ -189,7 +203,7 @@ const game = {
         // --- ZMIANA TEKSTU PRZYCISKU POWROTU ---
         const backBtn = document.getElementById('backMenu');
         const proModes = ['easy', 'hard', 'pro', 'expert'];
-        
+
         if (proModes.includes(mode)) {
             backBtn.textContent = "ZMIEŃ POZIOM TRUDNOŚCI";
         } else {
@@ -215,7 +229,7 @@ const game = {
 
         this.state.currentCode = this.state.countriesList[this.state.round - 1];
         this.state.tries = 0;
-        
+
         // --- LOGIKA BLURA ---
         const proModes = ['easy', 'hard', 'pro', 'expert'];
         if (proModes.includes(this.state.mode)) {
@@ -227,14 +241,14 @@ const game = {
         ui.elements.input.value = '';
         ui.elements.input.disabled = false;
         ui.elements.checkBtn.disabled = false;
-        
+
         // --- PRZYCISK POWROTU ZAWSZE WIDOCZNY ---
         ui.elements.backBtn.classList.remove('hidden');
 
         ui.elements.round.textContent = this.state.round;
         ui.elements.msg.textContent = "Zgadnij kraj!";
         ui.elements.msg.style.color = "var(--text-muted)";
-        
+
         ui.setDots(this.config.maxTries, 0);
 
         const progressPct = ((this.state.round - 1) / this.config.maxRounds) * 100;
@@ -264,10 +278,10 @@ const game = {
 
             this.state.score += totalPoints;
             this.state.streak++;
-            
+
             ui.elements.score.textContent = this.state.score;
             ui.elements.streak.textContent = this.state.streak;
-            
+
             const recordKey = `bestScore_${this.state.mode}`;
             const currentBest = parseInt(localStorage.getItem(recordKey) || 0);
 
@@ -277,16 +291,20 @@ const game = {
             }
             if (this.state.score > currentBest) {
                 localStorage.setItem(recordKey, this.state.score);
+                if (typeof UserManager !== 'undefined') {
+                    UserManager.saveUserScore(recordKey, this.state.score);
+                    ui.renderLeaderboard(this.state.mode);
+                }
             }
 
             ui.elements.msg.textContent = `Brawo! To ${currentSource[this.state.currentCode][0]}`;
             ui.elements.msg.style.color = "var(--success)";
-            
+
             ui.updateBlur(0, false);
             ui.animatePoints(totalPoints);
-            
+
             const dots = ui.elements.attemptsBox.children;
-            if(dots[this.state.tries-1]) dots[this.state.tries-1].classList.add('success');
+            if (dots[this.state.tries - 1]) dots[this.state.tries - 1].classList.add('success');
 
             this.nextRoundDelay();
         } else {
@@ -300,7 +318,7 @@ const game = {
                 this.nextRoundDelay();
             } else {
                 ui.shakeInput();
-                
+
                 // Zmniejszamy blur TYLKO jeśli był aktywny (tryb PRO)
                 if (this.state.blurPct > 0) {
                     this.state.blurPct = Math.max(0, this.state.blurPct - 8);
@@ -309,7 +327,7 @@ const game = {
                     ui.elements.msg.textContent = "Źle! Spróbuj jeszcze raz...";
                 }
                 ui.elements.msg.style.color = "var(--warning)";
-                
+
                 ui.updateBlur(this.state.blurPct, this.state.mode === 'expert');
             }
         }
@@ -331,8 +349,12 @@ const game = {
         // Przycisk powrotu jest już widoczny, więc nic nie trzeba robić
     },
 
-    backToMenu() { ui.showMenu(); },
-    
+    backToMenu() {
+        ui.showMenu();
+        const leaderboardContainer = document.getElementById('leaderboard-container');
+        if (leaderboardContainer) leaderboardContainer.innerHTML = '';
+    },
+
     shuffle(array) {
         let arr = array.slice();
         for (let i = arr.length - 1; i > 0; i--) {
@@ -352,7 +374,7 @@ ui.elements.input.addEventListener('input', (e) => {
     const val = e.target.value.toLowerCase();
     ui.elements.suggestList.innerHTML = '';
     if (val.length < 2) { ui.elements.suggestList.classList.add('hidden'); return; }
-    
+
     const matches = game.countryNames.filter(c => c.toLowerCase().startsWith(val)).slice(0, 5);
     if (matches.length > 0) {
         ui.elements.suggestList.classList.remove('hidden');
