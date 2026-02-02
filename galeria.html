@@ -1,0 +1,280 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria - Cukiereczki</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-content">
+            <h1>Świętokrzyskie Stowarzyszenie Pomocy</h1>
+            <p class="subtitle">Dzieciom, Młodzieży, Dorosłym z Cukrzycą i z Innymi Schorzeniami</p>
+
+            <nav>
+                <button class="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul>
+                    <li><a href="index.html">STRONA GŁÓWNA</a></li>
+
+                    <li>
+                        <a href="aktualnosci.html">AKTUALNOŚCI</a>
+                        <ul class="submenu">
+                            <li><a href="archiwalne.html">ARCHIWALNE</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="dzialalnosc.html">DZIAŁALNOŚĆ</a></li>
+
+                    <li>
+                        <a href="statut.html">STATUT</a>
+                        <ul class="submenu">
+                            <li><a href="pliki.html">PLIKI DO POBRANIA</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="opp.html" style="background-color: #FF8585;">1,5% OPP</a>
+                        <ul class="submenu">
+                            <li><a href="sprawozdania.html">SPRAWOZDANIE FINANSOWE</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="galeria.html" class="active">GALERIA</a></li>
+                    <li><a href="kontakt.html">KONTAKT</a></li>
+
+                    <li>
+                        <a href="cukrzyca.html">POZNAJ CUKRZYCĘ</a>
+                        <ul class="submenu">
+                            <li><a href="informacje.html">INFORMACJE OGÓLNE</a></li>
+                            <li><a href="linki.html">LINKI</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h2 class="page-title">Galeria zdjęć</h2>
+            <div class="breadcrumbs">Wspomnienia z naszych wydarzeń</div>
+        </div>
+
+        <div class="gallery-grid">
+            <!-- 2025 -->
+            <div class="gallery-item" data-id="20250920" data-folder="20250920_Konferencja"
+                onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20250920_Konferencja/DSC_0071.png');"></div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">20.09.2025</div>
+                    <div class="gallery-title">Konferencja</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-id="20250622" data-folder="20250622_Bialka" onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20250622_Bialka/20250621_153755.png');"></div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">22.06.2025</div>
+                    <div class="gallery-title">Białka</div>
+                </div>
+            </div>
+
+            <!-- 2024 -->
+            <div class="gallery-item" data-id="20241012" data-folder="20241012_Konferencja"
+                onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20241012_Konferencja/DSC_0214.png');"></div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">12.10.2024</div>
+                    <div class="gallery-title">Konferencja</div>
+                </div>
+            </div>
+
+            <!-- 2023 -->
+            <div class="gallery-item" data-id="20231007" data-folder="20231007_Konferencja"
+                onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20231007_Konferencja/DSC_0133.png');"></div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">07.10.2023</div>
+                    <div class="gallery-title">Konferencja</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-id="20230609" data-folder="20230609_Bialka" onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20230609_Bialka/20230609_111219.png');"></div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">09-11.06.2023</div>
+                    <div class="gallery-title">Białka</div>
+                </div>
+            </div>
+
+            <!-- 2022 -->
+            <div class="gallery-item" data-id="20221217" data-folder="20221217_Spotkanie_wigilijne"
+                onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20221217_Spotkanie_wigilijne/DSC_0106.png');"></div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">17.12.2022</div>
+                    <div class="gallery-title">Spotkanie wigilijne</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-id="20220918" data-folder="20220918_Konferencja"
+                onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20220918_Konferencja/DSC_0011.png');"></div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">18.09.2022</div>
+                    <div class="gallery-title">Konferencja</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-id="20220618" data-folder="20220618_Bialka" onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20220618_Bialka/20220618_183314.png');"></div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">18.06.2022</div>
+                    <div class="gallery-title">Białka</div>
+                </div>
+            </div>
+
+            <!-- 2021 -->
+            <div class="gallery-item" data-id="20211204" data-folder="20211204_Mikolajki"
+                onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20211204_Mikolajki/DSC_0005.png');"></div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">04.12.2021</div>
+                    <div class="gallery-title">Mikołajki</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-id="20211002" data-folder="20211002_Konferencja"
+                onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20211002_Konferencja/DSC_0943.png');"></div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">02.10.2021</div>
+                    <div class="gallery-title">Konferencja</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-id="20210529" data-folder="20210529_Spotkanie_w_stadninie_koni"
+                onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20210529_Spotkanie_w_stadninie_koni/DSC_0301.png');">
+                </div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">29.05.2021</div>
+                    <div class="gallery-title">Spotkanie w stadninie koni</div>
+                </div>
+            </div>
+
+            <!-- 2020 -->
+            <div class="gallery-item" data-id="20201003" data-folder="20201003_Konferencja"
+                onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20201003_Konferencja/DSC_0103.png');"></div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">03.10.2020</div>
+                    <div class="gallery-title">Konferencja</div>
+                </div>
+            </div>
+            <!-- 2019 -->
+            <div class="gallery-item" data-id="20191207" data-folder="20191207_Mikolajki"
+                onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20191207_Mikolajki/DSC_0036.png');"></div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">07.12.2019</div>
+                    <div class="gallery-title">Mikołajki</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-id="20191019" data-folder="20191019_Konferencja"
+                onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20191019_Konferencja/DSC_0581.png');"></div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">19.10.2019</div>
+                    <div class="gallery-title">Konferencja</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-id="20190430" data-folder="20190430_Bialka" onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20190430_Bialka/DSC_0718.png');"></div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">30.04-05.04.2019</div>
+                    <div class="gallery-title">Białka</div>
+                </div>
+            </div>
+
+            <!-- 2018 -->
+            <div class="gallery-item" data-id="20181118" data-folder="20181118_Basen" onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20181118_Basen/DSC_0517.png');"></div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">18.11.2018</div>
+                    <div class="gallery-title">Basen</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-id="20181013" data-folder="20181013_20lecie_stowarzyszenia"
+                onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20181013_20lecie_stowarzyszenia/DSC_0344.png');">
+                </div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">13.10.2018</div>
+                    <div class="gallery-title">20-lecie stowarzyszenia</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-id="20180804" data-folder="20180804_Debki" onclick="openGalleryModal(this)">
+                <div class="gallery-img"
+                    style="background-image: url('zdjecia_na_strone/20180804_Debki/DSC_0265.png');"></div>
+                <div class="gallery-caption">
+                    <div class="gallery-date">04.08.2018</div>
+                    <div class="gallery-title">Dębki</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>Świętokrzyskie Stowarzyszenie Pomocy</strong></p>
+        <p>ul. Warszawska 99/42, 25-543 Kielce</p>
+    </footer>
+
+    <!-- Modal Galerii -->
+    <div id="galleryModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <p id="modalDate"></p>
+            </div>
+            <div id="modalDescription" class="modal-description"></div>
+            <div id="modalGallery" class="modal-gallery-grid"></div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal - powiększone zdjęcie -->
+    <div id="lightboxModal" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <div class="lightbox-content">
+            <img id="lightboxImage" src="" alt="Powiększone zdjęcie">
+            <button class="lightbox-arrow lightbox-arrow-left" id="lightboxPrev">&#10094;</button>
+            <button class="lightbox-arrow lightbox-arrow-right" id="lightboxNext">&#10095;</button>
+        </div>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

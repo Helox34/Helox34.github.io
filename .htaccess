@@ -1,0 +1,41 @@
+# ===================================================================
+# WYŁĄCZENIE AUTOMATYCZNEJ KOMPRESJI OBRAZÓW NA HOSTLINE - WERSJA 2
+# ===================================================================
+
+# Wyłącz mod_pagespeed (priorytety)
+<IfModule pagespeed_module>
+    ModPagespeed off
+</IfModule>
+
+# Wyłącz kompresję obrazów
+<IfModule mod_deflate.c>
+    SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|webp)$ no-gzip dont-vary
+</IfModule>
+
+# Wymuś brak transformacji obrazów
+<IfModule mod_headers.c>
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp)$">
+        Header set Cache-Control "no-transform, public, max-age=31536000"
+        Header unset Vary
+        Header unset ETag
+    </FilesMatch>
+</IfModule>
+
+# Wyłącz wszystkie filtry dla obrazów
+<FilesMatch "\.(jpg|jpeg|png|gif)$">
+    SetOutputFilter NONE
+    SetEnv no-gzip 1
+    SetEnv dont-vary 1
+</FilesMatch>
+
+# Blokuj optymalizację
+SetEnv DONT_VARY_USER_AGENT true
+SetEnv IMAGE_QUALITY 100
+
+# Wyłącz mod_rewrite dla obrazów
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Nie przepisuj ścieżek do obrazów
+    RewriteCond %{REQUEST_URI} \.(jpg|jpeg|png|gif)$ [NC]
+    RewriteRule .* - [L]
+</IfModule>

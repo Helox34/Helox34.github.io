@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprawozdania Finansowe - Cukiereczki</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .download-list { margin-top: 30px; }
+        .download-item {
+            display: flex;
+            align-items: center;
+            background: #f9f9f9;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border-left: 5px solid #FF8585; /* Kolor nawiązujący do OPP */
+            transition: 0.3s;
+        }
+        .download-item:hover { transform: translateX(10px); background: #fff0f0; }
+        .file-icon { font-size: 2rem; margin-right: 20px; }
+        .file-info h4 { margin: 0; color: #333; font-size: 1.1rem; }
+        .file-info p { margin: 0; font-size: 0.85rem; color: #666; }
+        .download-btn {
+            margin-left: auto;
+            background: #FF8585;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .download-btn:hover { background: #e05e5e; }
+    </style>
+</head>
+<body>
+
+<header>
+        <div class="header-content">
+            <h1>Świętokrzyskie Stowarzyszenie Pomocy</h1>
+            <p class="subtitle">Dzieciom, Młodzieży, Dorosłym z Cukrzycą i z Innymi Schorzeniami</p>
+            
+            <nav>
+                <button class="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul>
+                    <li><a href="index.html">STRONA GŁÓWNA</a></li>
+                    
+                    <li>
+                        <a href="aktualnosci.html">AKTUALNOŚCI</a>
+                        <ul class="submenu">
+                            <li><a href="archiwalne.html">ARCHIWALNE</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="dzialalnosc.html">DZIAŁALNOŚĆ</a></li>
+                    
+                    <li>
+                        <a href="statut.html">STATUT</a>
+                        <ul class="submenu">
+                            <li><a href="pliki.html">PLIKI DO POBRANIA</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="opp.html" style="background-color: #FF8585;">1,5% OPP</a>
+                        <ul class="submenu">
+                            <li><a href="sprawozdania.html">SPRAWOZDANIE FINANSOWE</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="galeria.html">GALERIA</a></li>
+                    <li><a href="kontakt.html">KONTAKT</a></li>
+                    
+                    <li>
+                        <a href="cukrzyca.html">POZNAJ CUKRZYCĘ</a>
+                        <ul class="submenu">
+                            <li><a href="informacje.html">INFORMACJE OGÓLNE</a></li>
+                            <li><a href="linki.html">LINKI</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="content-centered">
+            <div class="page-header">
+                <h2 class="page-title">Sprawozdania Finansowe</h2>
+                <div class="breadcrumbs">Transparentność to podstawa naszej działalności</div>
+            </div>
+
+            <div class="article-text">
+                <p>Jako Organizacja Pożytku Publicznego dbamy o pełną jawność naszych finansów. Poniżej znajdą Państwo roczne sprawozdania merytoryczne i finansowe z działalności Stowarzyszenia.</p>
+
+                <div class="download-list">
+                    <div class="download-item">
+                        <div class="file-icon">📄</div>
+                        <div class="file-info">
+                            <h4>Sprawozdanie finansowe za rok 2024</h4>
+                            <p>Format PDF | Rozmiar: 1.2 MB</p>
+                        </div>
+                        <a href="#" class="download-btn">Pobierz</a>
+                    </div>
+
+                    <div class="download-item">
+                        <div class="file-icon">📄</div>
+                        <div class="file-info">
+                            <h4>Sprawozdanie finansowe za rok 2023</h4>
+                            <p>Format PDF | Rozmiar: 1.1 MB</p>
+                        </div>
+                        <a href="#" class="download-btn">Pobierz</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>Świętokrzyskie Stowarzyszenie Pomocy</strong></p>
+        <p>ul. Warszawska 99/42, 25-543 Kielce</p>
+    </footer>
+</body>
+</html>

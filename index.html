@@ -4,116 +4,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Quiz Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Świętokrzyskie Stowarzyszenie Pomocy</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <!-- Modal wprowadzania nazwy użytkownika -->
-    <div id="username-modal" class="hidden">
-        <div class="username-card">
-            <div class="username-header">
-                <h2>Witaj w Game Hub!</h2>
-                <p>Podaj swoją nazwę, aby zapisywać wyniki</p>
-            </div>
-            <div class="username-input-group">
-                <input type="text" id="username-input" placeholder="Twoja nazwa..." maxlength="20" autocomplete="off">
-                <span id="username-error" class="hidden"></span>
-            </div>
-            <button id="username-submit">ZACZNIJ GRĘ</button>
+    <header>
+        <div class="header-content">
+            <h1>Świętokrzyskie Stowarzyszenie Pomocy</h1>
+            <p class="subtitle">Dzieciom, Młodzieży, Dorosłym z Cukrzycą i z Innymi Schorzeniami</p>
+
+            <nav>
+                <button class="hamburger" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul>
+                    <li><a href="index.html" class="active">STRONA GŁÓWNA</a></li>
+
+                    <li>
+                        <a href="aktualnosci.html">AKTUALNOŚCI</a>
+                        <ul class="submenu">
+                            <li><a href="archiwalne.html">ARCHIWALNE</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="dzialalnosc.html">DZIAŁALNOŚĆ</a></li>
+
+                    <li>
+                        <a href="statut.html">STATUT</a>
+                        <ul class="submenu">
+                            <li><a href="pliki.html">PLIKI DO POBRANIA</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="opp.html" style="background-color: #FF8585;">1,5% OPP</a>
+                        <ul class="submenu">
+                            <li><a href="sprawozdania.html">SPRAWOZDANIE FINANSOWE</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="galeria.html">GALERIA</a></li>
+                    <li><a href="kontakt.html">KONTAKT</a></li>
+
+                    <li>
+                        <a href="cukrzyca.html">POZNAJ CUKRZYCĘ</a>
+                        <ul class="submenu">
+                            <li><a href="informacje.html">INFORMACJE OGÓLNE</a></li>
+                            <li><a href="linki.html">LINKI</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
         </div>
+    </header>
+
+    <div class="container home-container">
+
+        <section class="hero">
+            <div>Pomagając - dajesz uśmiech</div>
+        </section>
+
+        <main class="main-content center-text-content">
+            <h2>Witamy</h2>
+
+            <div id="latest-post-home">
+                <p style="text-align: left; color: #999;">Ładowanie najnowszego wpisu...</p>
+            </div>
+
+            <div class="alert-box">
+                <p>Osoby zainteresowane uczestnictwem w projektach organizowanych przez Stowarzyszenie prosimy o
+                    osobiste zapisy telefoniczne lub na zebraniach </p>
+                <p class="contact-highlight" style="font-weight: bold; margin-top: 10px;">Telefon: 609 309 229</p>
+                <p class="small-text" style="font-size: 0.9rem; margin-top: 10px;">Prosimy o aktualizację danych
+                    członków na adres e-mail: <a href="mailto:cukiereczki@cukiereczki.org"
+                        style="color: #6ECB9C;">cukiereczki@cukiereczki.org</a></p>
+            </div>
+
+            <div class="finance-section">
+                <h3 style="margin-bottom: 20px; color: #333;">Konta do wpłat na cele statutowe</h3>
+
+                <div class="finance-card primary-card">
+                    <span class="account-label" style="display: block; font-size: 1.5rem; color: blue   ;"><b>Składki
+                            członkowskie, darowizny</b></span>
+                    <div class="account-number">BNP PARIBAS 20 1600 1462 1713 1144 4000 0001</div>
+                    <button class="copy-btn">Kopiuj numer</button>
+                </div>
+
+                <div class="finance-card second-card">
+                    <span class="account-label" style="display: block; font-size: 1.5rem; color: red;"><b>Przekaż - 1,5%
+                            Podatku OPP do PIT</b></span>
+                    <div class="account-number"><strong>KRS – 0000020049</strong></div>
+                    <button class="copy-btn">Kopiuj numer</button>
+                </div>
+
+                <div class="finance-card third-card">
+                    <span class="account-label" style="display: block; font-size: 0.9rem; color: #6ECB9C;"><b>❤️ Pomóż
+                            Bartkowi</b></span>
+                    <div class="account-number">BNP PARIBAS 90 1600 1462 1713 1144 4000 0002</div>
+                    <button class="copy-btn">Kopiuj numer</button>
+                </div>
+            </div>
+        </main>
+
+        <aside>
+            <br>
+            <br>
+            <div class="widget search-box">
+                <input type="text" placeholder="Szukaj..." aria-label="Szukaj">
+                <button>Szukaj</button>
+            </div>
+
+            <div class="widget">
+                <h3>Ostatnie wpisy</h3>
+                <ul class="post-list" id="recent-posts-list">
+                    <li style="text-align:center; color:#999;">Ładowanie...</li>
+                </ul>
+            </div>
+
+            <div class="widget">
+                <h3>Kalendarz wydarzeń</h3>
+
+                <div class="calendar-preview"></div>
+
+                <div class="calendar-footer"></div>
+            </div>
+    </div>
+    </aside>
+
     </div>
 
-    <div class="bg-animation"></div>
+    <footer>
+        <p><strong>Świętokrzyskie Stowarzyszenie Pomocy Dzieciom, Młodzieży, Dorosłym z Cukrzycą i z Innymi
+                Schorzeniami</strong></p>
+        <p>ul. Warszawska 99/42, 25-543 Kielce</p>
+        <p class="footer-meta">NIP: 657-23-41-219 | KRS: 0000020049</p>
+    </footer>
 
-    <div class="main-container">
-
-        <header class="hub-header fade-in">
-            <h1 class="main-title">GAME <span class="accent-text">HUB</span></h1>
-            <p class="subtitle">Wybierz wyzwanie i pobij rekordy</p>
-        </header>
-
-        <div class="games-grid">
-
-
-
-            <a href="flagdle/index.html" class="game-card card-flagdle fade-in-stagger">
-                <div class="card-icon"><i class="fa-solid fa-flag"></i></div>
-                <div class="card-content">
-                    <h2>FLAGDLE</h2>
-                    <p>Zgadnij kraj po zamazanej fladze.</p>
-                </div>
-                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-
-            <a href="population_higher-lower/index.html" class="game-card card-popdle fade-in-stagger">
-                <div class="card-icon"><i class="fa-solid fa-users"></i></div>
-                <div class="card-content">
-                    <h2>POPDLE</h2>
-                    <p>Kto ma większą populację?</p>
-                </div>
-                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-
-            <a href="logodle/index.html" class="game-card card-logodle fade-in-stagger">
-                <div class="card-icon"><i class="fa-solid fa-shapes"></i></div>
-                <div class="card-content">
-                    <h2>LOGODLE</h2>
-                    <p>Rozpoznaj markę po fragmencie.</p>
-                </div>
-                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-
-            <a href="items_higher-lower/index.html" class="game-card card-pricedle fade-in-stagger">
-                <div class="card-icon"><i class="fa-solid fa-tag"></i></div>
-                <div class="card-content">
-                    <h2>PRICEDLE</h2>
-                    <p>Co kosztuje więcej?</p>
-                </div>
-                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-
-            <a href="Chronodle/index.html" class="game-card card-chronodle fade-in-stagger">
-                <div class="card-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                <div class="card-content">
-                    <h2>CHRONODLE</h2>
-                    <p>Co wydarzyło się wcześniej?</p>
-                </div>
-                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-
-            <a href="reaction_time/index.html" class="game-card card-reaction fade-in-stagger">
-                <div class="card-icon"><i class="fa-solid fa-bolt"></i></div>
-                <div class="card-content">
-                    <h2>REACTION</h2>
-                    <p>Test czasu reakcji.</p>
-                </div>
-                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-
-            <a href="ziemniak/index.html" class="game-card card-ziemniak fade-in-stagger">
-                <div class="card-icon"><img src="ziemniak/potato.png" alt="Ziemniak" style="width: 40px; height: 40px;">
-                </div>
-                <div class="card-content">
-                    <h2>ZIEMNIAK</h2>
-                    <p>Gra towarzyska - Gorący Ziemniak!</p>
-                </div>
-                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-        </div>
-
-        <footer class="hub-footer fade-in">
-            <p>©Bartłomiej Piwowarczyk &bull; 2026</p>
-        </footer>
-
-    </div>
-
-    <!-- System zarządzania użytkownikami -->
-    <script src="user-manager.js"></script>
     <script src="script.js"></script>
+
 </body>
 
 </html>
