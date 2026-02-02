@@ -22,7 +22,8 @@ function init() {
     if (typeof LeaderboardComponent !== 'undefined') {
         LeaderboardComponent.render('reaction_best', 'leaderboard-container', {
             title: 'TOP 10 NAJLEPSZYCH CZASÓW',
-            limit: 10
+            limit: 10,
+            lowerIsBetter: true  // Dla reaction time: mniejszy czas = lepiej!
         });
     }
 }
@@ -103,7 +104,8 @@ function checkBestScore(time) {
             if (typeof LeaderboardComponent !== 'undefined') {
                 LeaderboardComponent.render('reaction_best', 'leaderboard-container', {
                     title: 'TOP 10 NAJLEPSZYCH CZASÓW',
-                    limit: 10
+                    limit: 10,
+                    lowerIsBetter: true  // Dla reaction time: mniejszy czas = lepiej!
                 });
             }
         }

@@ -12,6 +12,7 @@ const LeaderboardComponent = {
      * @param {number} options.limit - Maksymalna liczba wyników do wyświetlenia (domyślnie 10)
      * @param {string} options.title - Tytuł tabeli (domyślnie 'TOP WYNIKI')
      * @param {boolean} options.highlightCurrent - Czy podświetlić aktualnego użytkownika (domyślnie true)
+     * @param {boolean} options.lowerIsBetter - Czy mniejszy wynik = lepiej (domyślnie false)
      */
     render(scoreKey, containerId, options = {}) {
         const container = document.getElementById(containerId);
@@ -23,11 +24,12 @@ const LeaderboardComponent = {
         const {
             limit = 10,
             title = 'TOP WYNIKI',
-            highlightCurrent = true
+            highlightCurrent = true,
+            lowerIsBetter = false
         } = options;
 
         // Pobierz top wyniki
-        const scores = UserManager.getTopScores(scoreKey, limit);
+        const scores = UserManager.getTopScores(scoreKey, limit, lowerIsBetter);
         const currentUser = UserManager.getCurrentUser();
 
         // Jeśli brak wyników

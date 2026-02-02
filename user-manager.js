@@ -183,9 +183,10 @@ const UserManager = {
      * Pobiera top wyniki dla danej gry
      * @param {string} scoreKey - Klucz wyniku
      * @param {number} limit - Maksymalna liczba wyników (domyślnie 10)
+     * @param {boolean} lowerIsBetter - Czy mniejszy wynik = lepiej (domyślnie false)
      * @returns {Array<{username: string, score: number, date: string}>}
      */
-    getTopScores(scoreKey, limit = 10) {
+    getTopScores(scoreKey, limit = 10, lowerIsBetter = false) {
         const users = this.getAllUsers();
         const scores = [];
 
@@ -200,8 +201,14 @@ const UserManager = {
             }
         }
 
-        // Sortuj malejąco według wyniku
-        scores.sort((a, b) => b.score - a.score);
+        // Sortuj według wyniku - rosnąco lub malejąco
+        if (lowerIsBetter) {
+            // Dla Reaction Time: mniejszy czas = lepiej
+            scores.sort((a, b) => a.score - b.score);
+        } else {
+            // Dla innych gier: większy wynik = lepiej
+            scores.sort((a, b) => b.score - a.score);
+        }
 
         return scores.slice(0, limit);
     },
