@@ -49,22 +49,15 @@ html {
 }
 
 .bg-animation {
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at 50% 50%, rgba(43, 135, 209, 0.15), transparent 60%);
-    animation: rotateBg 20s linear infinite;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(43, 135, 209, 0.08), transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(75, 219, 106, 0.05), transparent 50%);
     z-index: -1;
-}
-
-@keyframes rotateBg {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
+    pointer-events: none;
 }
 
 /* Główna Karta */

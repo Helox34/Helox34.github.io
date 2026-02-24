@@ -1,70 +1,93 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Price-dle - Co jest droższe?</title>
+    <title>Price-dle: Co kosztuje więcej?</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Firebase SDK (compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <script src="../firebase-config.js"></script>
+    <script src="../firebase-leaderboard.js"></script>
+    <script src="../user-manager.js"></script>
+    <script src="../leaderboard-component.js"></script>
 </head>
+
 <body>
     <a href="../index.html" class="btn-home">
         <i class="fa-solid fa-house"></i> <span>MENU</span>
     </a>
+
     <div class="bg-animation"></div>
 
-    <div class="card glass-panel fade-in">
-        <header class="header-area">
-            <h1>PRICE<span class="accent">DLE</span></h1>
-            <p class="subtitle">Co kosztuje więcej?</p>
-        </header>
+    <div id="game" class="game-panel glass-panel fade-in">
+        <!-- Nagłówek ze score -->
+        <div class="game-top-bar">
+            <div class="game-logo">PRICE<span class="accent">DLE</span></div>
+            <div class="game-scores">
+                <span class="score-item">Passa: <strong id="current-score">0</strong></span>
+                <span class="score-divider">·</span>
+                <span class="score-item">Rekord: <strong id="best-score" class="gold-text">0</strong></span>
+            </div>
+        </div>
 
-        <div class="game-board">
-            <div class="country-box left-box">
-                <div class="img-container">
-                    <img id="img-left" class="item-img" src="" alt="Produkt">
-                </div>
-                <h2 id="name-left" class="item-name">Ferrari F40</h2>
-                <div class="stat-container">
-                    <span class="stat-label">Cena</span>
-                    <span id="val-left" class="stat-value">$2 500 000</span>
+        <!-- TIMELINE CONTAINER -->
+        <div class="timeline-container">
+
+            <!-- Linia pionowa (tło) -->
+            <div class="timeline-vertical-line"></div>
+
+            <!-- PRODUKT ZNANY (GÓRA) -->
+            <div class="tl-node tl-node-top">
+                <div class="tl-dot dot-known"></div>
+                <div class="tl-card tl-card-known">
+                    <span class="tl-label">Znany produkt</span>
+                    <h3 id="name-left" class="tl-event-name">Produkt A</h3>
+                    <div class="tl-year known-year" id="val-left">10,00 zł</div>
                 </div>
             </div>
 
-            <div class="vs-circle">VS</div>
+            <!-- SEPARATOR Z PYTANIEM -->
+            <div class="tl-question-zone">
+                <div class="tl-dot dot-question"><i class="fa-solid fa-question"></i></div>
+            </div>
 
-            <div class="country-box right-box">
-                <div class="img-container">
-                    <img id="img-right" class="item-img" src="" alt="Produkt">
-                </div>
-                <h2 id="name-right" class="item-name">Rolex Daytona</h2>
-                
-                <div class="stat-container interaction-zone">
-                    <div id="buttons-area" class="buttons-block">
-                        <p class="question">kosztuje...</p>
-                        <div class="btns-row">
-                            <button class="btn-guess btn-higher" onclick="game.guess('higher')">
+            <!-- PRODUKT NIEZNANY (DÓŁ) -->
+            <div class="tl-node tl-node-bottom">
+                <div class="tl-dot dot-unknown"></div>
+                <div class="tl-card tl-card-unknown">
+                    <span class="tl-label">Zgadnij cenę!</span>
+                    <h3 id="name-right" class="tl-event-name">Produkt B</h3>
+
+                    <div id="buttons-area" class="tl-buttons">
+                        <p class="tl-question-text">Ten produkt kosztuje...</p>
+                        <div class="tl-btns-row">
+                            <button class="btn-guess btn-more" onclick="game.guess('higher')">
                                 <i class="fa-solid fa-arrow-up"></i> WIĘCEJ
                             </button>
-                            <button class="btn-guess btn-lower" onclick="game.guess('lower')">
+                            <button class="btn-guess btn-less" onclick="game.guess('lower')">
                                 <i class="fa-solid fa-arrow-down"></i> MNIEJ
                             </button>
                         </div>
                     </div>
 
-                    <div id="result-area" class="result-block hidden">
-                        <span class="stat-label">Cena</span>
-                        <span id="val-right" class="stat-value">???</span>
+                    <div id="result-area" class="tl-result hidden">
+                        <div class="tl-year result-year" id="val-right">???</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="footer-stats">
-            <div class="stat-pill">Passa: <span id="current-score" class="highlight">0</span></div>
-            <div class="stat-pill">Rekord: <span id="best-score" class="gold-text">0</span></div>
-        </div>
+        <!-- HIDDEN imgs for compatibility -->
+        <img id="img-left" class="hidden" src="" alt="">
+        <img id="img-right" class="hidden" src="" alt="">
+
+        <!-- Tabela rankingowa -->
+        <div id="leaderboard-container"></div>
     </div>
 
     <div id="game-over" class="modal hidden">
@@ -72,10 +95,13 @@
             <h1 class="loss-title">KONIEC GRY!</h1>
             <p class="loss-reason" id="loss-msg">Błąd.</p>
             <div class="final-score">Twój wynik: <span id="final-score-val">0</span></div>
+            <br>
             <button class="btn-restart" onclick="game.restart()">ZAGRAJ PONOWNIE</button>
         </div>
     </div>
 
     <script src="script.js"></script>
+    <script src="../security.js"></script>
 </body>
+
 </html>

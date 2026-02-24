@@ -105,18 +105,102 @@ const ui = {
         });
     },
 
+    modeNames: {
+        'europa': 'EUROPA', 'azja': 'AZJA', 'afryka': 'AFRYKA',
+        'ameryki': 'AMERYKI', 'swiat': 'CAŁY ŚWIAT',
+        'easy': 'ŁATWY', 'hard': 'ŚREDNI', 'pro': 'TRUDNY', 'expert': 'EKSPERT'
+    },
+
     renderLeaderboard(mode) {
-        if (typeof LeaderboardComponent !== 'undefined') {
-            const modeNames = {
-                'europa': 'EUROPA', 'azja': 'AZJA', 'afryka': 'AFRYKA',
-                'ameryki': 'AMERYKI', 'swiat': 'CAŁY ŚWIAT',
-                'easy': 'ŁATWY', 'hard': 'ŚREDNI', 'pro': 'TRUDNY', 'expert': 'EKSPERT'
-            };
+        const container = document.getElementById('leaderboard-container');
+        if (!container) return;
+
+        const title = `🏆 TOP 10 - ${this.modeNames[mode] || mode.toUpperCase()}`;
+
+        // Użyj Firebase jeśli dostępne
+        if (typeof FirebaseLeaderboard !== 'undefined' && window.db) {
+            this.renderFirebaseLeaderboard(mode, container, title);
+        } else if (typeof LeaderboardComponent !== 'undefined') {
+            // Fallback do localStorage
             LeaderboardComponent.render(`bestScore_${mode}`, 'leaderboard-container', {
-                title: `TOP 10 - ${modeNames[mode]}`,
+                title: title,
                 limit: 10
             });
         }
+    },
+
+    async renderFirebaseLeaderboard(mode, container, title) {
+        try {
+            const scores = await FirebaseLeaderboard.getTopScores('flagle', mode, 10);
+            this._renderLeaderboardHTML(scores, container, title);
+        } catch (err) {
+            console.error('Error rendering Firebase leaderboard:', err);
+        }
+    },
+
+    _renderLeaderboardHTML(scores, container, title) {
+        const currentUser = typeof UserManager !== 'undefined' ? UserManager.getCurrentUser() : null;
+
+        if (!scores || scores.length === 0) {
+            container.innerHTML = `
+                <div class="leaderboard">
+                    <div class="leaderboard-glow"></div>
+                    <h3 class="leaderboard-title">${title}</h3>
+                    <p class="leaderboard-empty">Brak wyników — bądź pierwszy! 🚀</p>
+                </div>`;
+            return;
+        }
+
+        let rowsHTML = '';
+        scores.forEach((entry, index) => {
+            const pos = index + 1;
+            const isCurrentUser = currentUser && entry.username === currentUser;
+            const posIcon = pos === 1 ? '🥇' : pos === 2 ? '🥈' : pos === 3 ? '🥉' : `#${pos}`;
+            const dateStr = entry.date ? this._formatDate(entry.date) : '';
+
+            rowsHTML += `
+                <div class="leaderboard-row ${isCurrentUser ? 'current-user' : ''}">
+                    <span class="lbd-pos">${posIcon}</span>
+                    <span class="lbd-name">${this._escapeHtml(entry.username)}</span>
+                    <span class="lbd-score">${entry.score}</span>
+                    <span class="lbd-date">${dateStr}</span>
+                </div>`;
+        });
+
+        container.innerHTML = `
+            <div class="leaderboard">
+                <div class="leaderboard-glow"></div>
+                <h3 class="leaderboard-title">${title}</h3>
+                <div class="leaderboard-table">
+                    <div class="leaderboard-header">
+                        <span>#</span>
+                        <span>Gracz</span>
+                        <span>Wynik</span>
+                        <span>Data</span>
+                    </div>
+                    ${rowsHTML}
+                </div>
+            </div>`;
+    },
+
+    _formatDate(isoDate) {
+        const date = new Date(isoDate);
+        const now = new Date();
+        const diffMs = now - date;
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffHours = Math.floor(diffMs / 3600000);
+        const diffDays = Math.floor(diffMs / 86400000);
+        if (diffMins < 1) return 'teraz';
+        if (diffMins < 60) return `${diffMins} min temu`;
+        if (diffHours < 24) return `${diffHours}h temu`;
+        if (diffDays < 7) return `${diffDays} dni temu`;
+        return date.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    },
+
+    _escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
     },
 
     showGame() {
@@ -178,6 +262,7 @@ const game = {
         currentCode: null, blurPct: 40, countriesList: [], recordBroken: false
     },
     countryNames: [],
+    _unsubscribeLeaderboard: null, // Cleanup dla Firebase listenera
 
     getSmartPool(mode) {
         const source = countriesData[mode];
@@ -200,6 +285,12 @@ const game = {
         this.state.round = 1;
         this.state.recordBroken = false;
 
+        // Cleanup poprzedniego listenera Firebase
+        if (this._unsubscribeLeaderboard) {
+            this._unsubscribeLeaderboard();
+            this._unsubscribeLeaderboard = null;
+        }
+
         // --- ZMIANA TEKSTU PRZYCISKU POWROTU ---
         const backBtn = document.getElementById('backMenu');
         const proModes = ['easy', 'hard', 'pro', 'expert'];
@@ -221,6 +312,22 @@ const game = {
         ui.elements.score.textContent = '0';
         ui.elements.streak.textContent = '0';
         ui.showGame();
+
+        // Rejestruj gracza w Firebase i ustaw real-time listener
+        const username = typeof UserManager !== 'undefined' ? UserManager.getCurrentUser() : null;
+        if (typeof FirebaseLeaderboard !== 'undefined' && window.db && username) {
+            FirebaseLeaderboard.registerPlayer('flagle', username);
+
+            // Real-time listener na leaderboard
+            const container = document.getElementById('leaderboard-container');
+            const title = `🏆 TOP 10 - ${ui.modeNames[mode] || mode.toUpperCase()}`;
+            this._unsubscribeLeaderboard = FirebaseLeaderboard.listenToScores(
+                'flagle', mode,
+                (scores) => ui._renderLeaderboardHTML(scores, container, title),
+                10
+            );
+        }
+
         this.newRound();
     },
 
@@ -293,7 +400,11 @@ const game = {
                 localStorage.setItem(recordKey, this.state.score);
                 if (typeof UserManager !== 'undefined') {
                     UserManager.saveUserScore(recordKey, this.state.score);
-                    ui.renderLeaderboard(this.state.mode);
+                }
+                // Zapisz do Firebase
+                const username = typeof UserManager !== 'undefined' ? UserManager.getCurrentUser() : null;
+                if (typeof FirebaseLeaderboard !== 'undefined' && window.db && username) {
+                    FirebaseLeaderboard.saveScore('flagle', this.state.mode, username, this.state.score);
                 }
             }
 
@@ -346,7 +457,15 @@ const game = {
         ui.elements.progressBar.style.width = '100%';
         ui.elements.msg.textContent = `Koniec! Twój wynik: ${this.state.score}`;
         ui.elements.msg.style.color = "var(--text-main)";
-        // Przycisk powrotu jest już widoczny, więc nic nie trzeba robić
+
+        // Końcowy zapis do Firebase (na wypadek gdyby nie zapisał przy checkGuess)
+        const username = typeof UserManager !== 'undefined' ? UserManager.getCurrentUser() : null;
+        if (typeof FirebaseLeaderboard !== 'undefined' && window.db && username && this.state.score > 0) {
+            FirebaseLeaderboard.saveScore('flagle', this.state.mode, username, this.state.score);
+        }
+
+        // Renderuj końcowy leaderboard
+        ui.renderLeaderboard(this.state.mode);
     },
 
     backToMenu() {

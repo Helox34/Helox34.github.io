@@ -1,131 +1,154 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logodle - Zgadnij Markę</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Firebase SDK (compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <script src="../firebase-config.js"></script>
+    <script src="../firebase-leaderboard.js"></script>
+    <script src="../user-manager.js"></script>
+    <script src="../leaderboard-component.js"></script>
 </head>
+
 <body>
     <a href="../index.html" class="btn-home">
         <i class="fa-solid fa-house"></i> <span>MENU</span>
     </a>
+
     <div class="bg-animation"></div>
 
+    <!-- ======================== MENU ======================== -->
     <div id="menu" class="card glass-panel fade-in">
-        <div class="logo-area">
-            <h1>LOGODLE <span class="accent">QUIZ</span></h1>
+        <header class="header-area">
+            <h1>LOGO<span class="accent">DLE</span></h1>
             <p class="subtitle">Rozpoznasz markę po fragmencie?</p>
+        </header>
+
+        <p class="section-label">Wybierz poziom</p>
+
+        <div class="levels-list">
+            <button class="btn-level lvl-easy" onclick="game.start('easy')">
+                <div class="lvl-icon"><i class="fa-solid fa-star"></i></div>
+                <div class="lvl-info">
+                    <span class="lvl-name">Łatwy</span>
+                    <span class="lvl-date">Giganci rynku</span>
+                </div>
+                <div class="lvl-record-box">
+                    <span class="rec-val" id="record-easy">0</span>
+                </div>
+            </button>
+
+            <button class="btn-level lvl-medium" onclick="game.start('hard')">
+                <div class="lvl-icon"><i class="fa-solid fa-fire"></i></div>
+                <div class="lvl-info">
+                    <span class="lvl-name">Średni</span>
+                    <span class="lvl-date">Popularne marki</span>
+                </div>
+                <div class="lvl-record-box">
+                    <span class="rec-val" id="record-hard">0</span>
+                </div>
+            </button>
+
+            <button class="btn-level lvl-hard" onclick="game.start('pro')">
+                <div class="lvl-icon"><i class="fa-solid fa-bolt"></i></div>
+                <div class="lvl-info">
+                    <span class="lvl-name">Trudny</span>
+                    <span class="lvl-date">Technologia i inne</span>
+                </div>
+                <div class="lvl-record-box">
+                    <span class="rec-val" id="record-pro">0</span>
+                </div>
+            </button>
+
+            <button class="btn-level lvl-expert" onclick="game.start('expert')">
+                <div class="lvl-icon"><i class="fa-solid fa-skull"></i></div>
+                <div class="lvl-info">
+                    <span class="lvl-name">Ekspert</span>
+                    <span class="lvl-date">Czarno-białe</span>
+                </div>
+                <div class="lvl-record-box">
+                    <span class="rec-val" id="record-expert">0</span>
+                </div>
+            </button>
         </div>
 
-        <p class="section-title">Wybierz poziom:</p>
-
-        <div class="levels-container">
-            <div class="level-row">
-                <button class="btn-level btn-easy" onclick="game.start('easy')">
-                    <span class="btn-title">ŁATWY</span>
-                    <span class="btn-desc">Giganci rynku</span>
-                </button>
-                <div class="level-score">
-                    <span class="score-label">REKORD</span>
-                    <span class="score-value gold-glow" id="record-easy">0</span>
-                </div>
-            </div>
-
-            <div class="level-row">
-                <button class="btn-level btn-hard" onclick="game.start('hard')">
-                    <span class="btn-title">ŚREDNI</span>
-                    <span class="btn-desc">Popularne marki</span>
-                </button>
-                <div class="level-score">
-                    <span class="score-label">REKORD</span>
-                    <span class="score-value gold-glow" id="record-hard">0</span>
-                </div>
-            </div>
-
-            <div class="level-row">
-                <button class="btn-level btn-pro" onclick="game.start('pro')">
-                    <span class="btn-title">TRUDNY</span>
-                    <span class="btn-desc">Technologia i inne</span>
-                </button>
-                <div class="level-score">
-                    <span class="score-label">REKORD</span>
-                    <span class="score-value gold-glow" id="record-pro">0</span>
-                </div>
-            </div>
-
-            <div class="level-row">
-                <button class="btn-level btn-expert" onclick="game.start('expert')">
-                    <span class="btn-title">EKSPERT</span>
-                    <span class="btn-desc">Czarno-białe</span>
-                </button>
-                <div class="level-score">
-                    <span class="score-label">REKORD</span>
-                    <span class="score-value gold-glow" id="record-expert">0</span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="inline-instructions">
-            <p class="instr-title">Zasady punktacji:</p>
-                <ul>
-                <li><strong>Cel:</strong> Zgadnij markę na podstawie rozmazanego logo błąd zmniejsza rozmycie.</li>
+        <div class="rules-box">
+            <p class="rules-title"><i class="fa-solid fa-circle-info"></i> Zasady</p>
+            <ul>
+                <li><strong>Cel:</strong> Zgadnij markę po rozmazanym logo. Błąd zmniejsza rozmycie.</li>
                 <li><strong>Punktacja:</strong> +6 pkt + bonus za passę.</li>
-                <li><strong>Passa:</strong> Seria dobrych odpowiedzi zwiększa bonus!</li>
-                <li><strong>Tryb Ekspert:</strong> Loga są czarno-białe i powiększone.</li>
+                <li><strong>Ekspert:</strong> Loga czarno-białe i powiększone.</li>
             </ul>
         </div>
     </div>
 
-    <div id="game" class="card glass-panel hidden">
-        
+    <!-- ======================== GRA ======================== -->
+    <div id="game" class="game-panel glass-panel hidden">
+
         <div id="recordAnim" class="record-popup hidden">
             🏆 NOWY REKORD! 🏆
         </div>
 
-        <header class="game-hud">
-            <div class="hud-item">
-                <span class="hud-label">Runda</span>
-                <span class="hud-value"><span id="round">1</span>/8</span>
+        <!-- Top bar z HUD -->
+        <div class="game-top-bar">
+            <div class="game-logo">LOGO<span class="accent">DLE</span></div>
+            <div class="game-scores">
+                <span class="score-item">Runda: <strong id="round">1</strong>/8</span>
+                <span class="score-divider">·</span>
+                <span class="score-item">Wynik: <strong id="score" class="highlight-text">0</strong></span>
+                <span class="score-divider">·</span>
+                <span class="score-item">Passa: <strong id="currentStreak" class="fire-text">0</strong></span>
             </div>
-            <div class="hud-item score-container">
-                <span class="hud-label">Wynik</span>
-                <span class="hud-value highlight" id="score">0</span>
-            </div>
-            <div class="hud-item streak-container">
-                <span class="hud-label">Passa</span>
-                <span class="hud-value fire-text" id="currentStreak">0</span>
-            </div>
-        </header>
+        </div>
 
+        <!-- Progress bar -->
         <div class="progress-track">
             <div class="progress-fill" id="progressBar"></div>
         </div>
 
-        <div class="flag-wrapper logo-wrapper">
+        <!-- Logo area -->
+        <div class="logo-area">
             <div class="points-popup" id="pointsPopup"></div>
-            <div class="img-bg">
-                <img id="flag" class="flag-img logo-img" src="" alt="Logo" draggable="false">
+            <div class="logo-frame">
+                <img id="flag" class="logo-img" src="" alt="Logo" draggable="false">
             </div>
         </div>
 
-        <div class="interaction-area">
-            <div class="input-group">
+        <!-- Próby (dots) -->
+        <div class="attempts-row" id="attemptsDots"></div>
+
+        <!-- Input i przycisk -->
+        <div class="input-area">
+            <div class="input-wrapper">
                 <input id="guess" type="text" placeholder="Wpisz nazwę firmy..." autocomplete="off">
                 <ul id="suggestList" class="suggestions hidden"></ul>
             </div>
-            <button id="checkBtn" class="btn-action">SPRAWDŹ</button>
+            <button id="checkBtn" class="btn-check">SPRAWDŹ</button>
         </div>
 
-        <div class="feedback-box">
-            <p id="message" class="msg-text">Powodzenia!</p>
-            <div class="attempts-dots" id="attemptsDots"></div>
-        </div>
+        <!-- Feedback -->
+        <p id="message" class="msg-text">Powodzenia!</p>
 
-        <button id="backMenu" class="btn-secondary hidden" onclick="game.backToMenu()">WRÓĆ DO MENU</button>
+        <button id="backMenu" class="btn-text hidden" onclick="game.backToMenu()">WRÓĆ DO MENU</button>
+
+        <!-- Zmień kategorię -->
+        <button class="btn-change-category" onclick="game.backToMenu()">
+            <i class="fa-solid fa-shuffle"></i> ZMIEŃ KATEGORIĘ
+        </button>
+
+        <!-- Leaderboard -->
+        <div id="leaderboard-container"></div>
     </div>
 
     <script src="script.js"></script>
+    <script src="../security.js"></script>
 </body>
+
 </html>

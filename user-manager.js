@@ -35,7 +35,62 @@ const UserManager = {
         modal.classList.remove('hidden');
         input.focus();
 
-        const handleSubmit = () => {
+        // Dodaj kontener na info o istniejącym koncie (jeśli jeszcze nie istnieje)
+        let existsInfo = document.getElementById('username-exists-info');
+        if (!existsInfo) {
+            existsInfo = document.createElement('div');
+            existsInfo.id = 'username-exists-info';
+            existsInfo.style.cssText = `
+                display: none;
+                margin-top: 12px;
+                padding: 14px 16px;
+                background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.1));
+                border: 1px solid rgba(251, 191, 36, 0.4);
+                border-radius: 10px;
+                font-size: 0.9rem;
+                color: rgba(255, 255, 255, 0.9);
+                text-align: center;
+                animation: fadeIn 0.3s ease;
+            `;
+            // Wstaw po input-group, przed submit button
+            submitBtn.parentNode.insertBefore(existsInfo, submitBtn);
+        }
+
+        // Dodaj przycisk "Kontynuuj" (jeśli jeszcze nie istnieje)
+        let continueBtn = document.getElementById('username-continue');
+        if (!continueBtn) {
+            continueBtn = document.createElement('button');
+            continueBtn.id = 'username-continue';
+            continueBtn.style.cssText = `
+                display: none;
+                width: 100%;
+                padding: 15px;
+                font-size: 1.05rem;
+                font-weight: 700;
+                font-family: 'Montserrat', sans-serif;
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                color: white;
+                border: none;
+                border-radius: 12px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-top: 8px;
+            `;
+            // Wstaw po exists info, przed submit button
+            submitBtn.parentNode.insertBefore(continueBtn, submitBtn);
+        }
+
+        const resetExistsState = () => {
+            existsInfo.style.display = 'none';
+            continueBtn.style.display = 'none';
+            submitBtn.style.display = 'block';
+            submitBtn.textContent = 'ZACZNIJ GRĘ';
+        };
+
+        // Reset stanu
+        resetExistsState();
+
+        const handleSubmit = async () => {
             const username = input.value.trim();
             const validation = this.validateUsername(username);
 
@@ -43,20 +98,89 @@ const UserManager = {
                 errorMsg.textContent = validation.error;
                 errorMsg.classList.remove('hidden');
                 input.classList.add('error');
+                resetExistsState();
                 return;
             }
 
+            // Sprawdź czy nick istnieje w Firebase
+            if (typeof FirebaseLeaderboard !== 'undefined' && window.db) {
+                try {
+                    const safeUsername = FirebaseLeaderboard._sanitizeKey(username);
+                    // Szukamy w players (wszystkie gry)
+                    const playersRef = window.db.ref('players');
+                    const snapshot = await playersRef.once('value');
+                    const allPlayers = snapshot.val();
+
+                    let userExists = false;
+                    if (allPlayers) {
+                        for (const game in allPlayers) {
+                            if (allPlayers[game][safeUsername]) {
+                                userExists = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (userExists) {
+                        // Nick już istnieje — pokaż opcje
+                        errorMsg.classList.add('hidden');
+                        input.classList.remove('error');
+
+                        existsInfo.innerHTML = `
+                            ⚠️ Konto <strong style="color: #fbbf24;">${username}</strong> już istnieje!
+                        `;
+                        existsInfo.style.display = 'block';
+
+                        continueBtn.textContent = `KONTYNUUJ JAKO ${username.toUpperCase()}`;
+                        continueBtn.style.display = 'block';
+
+                        submitBtn.textContent = 'WPISZ INNY NICK';
+                        submitBtn.style.display = 'block';
+
+                        // Przycisk "Kontynuuj jako..."
+                        continueBtn.onclick = () => {
+                            this.setCurrentUser(username);
+                            this.createUserIfNotExists(username);
+                            modal.classList.add('hidden');
+                            resetExistsState();
+                        };
+
+                        // Przycisk "Wpisz inny nick"
+                        submitBtn.onclick = () => {
+                            input.value = '';
+                            input.focus();
+                            resetExistsState();
+                            submitBtn.onclick = handleSubmit;
+                        };
+
+                        return;
+                    }
+                } catch (err) {
+                    console.warn('Firebase check failed, proceeding normally:', err);
+                }
+            }
+
+            // Nick nie istnieje lub Firebase niedostępne — normalne logowanie
             this.setCurrentUser(username);
             this.createUserIfNotExists(username);
             modal.classList.add('hidden');
             errorMsg.classList.add('hidden');
             input.classList.remove('error');
+            resetExistsState();
         };
 
         submitBtn.onclick = handleSubmit;
         input.onkeypress = (e) => {
             if (e.key === 'Enter') handleSubmit();
         };
+
+        // Reset exists info gdy user zaczyna pisać nowy nick
+        input.addEventListener('input', () => {
+            if (existsInfo.style.display !== 'none') {
+                resetExistsState();
+                submitBtn.onclick = handleSubmit;
+            }
+        });
     },
 
     /**

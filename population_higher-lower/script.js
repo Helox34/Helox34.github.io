@@ -50,7 +50,7 @@ const countriesDB = [
     { code: "BT", name: "Bhutan", pop: 787000 },
     { code: "MV", name: "Malediwy", pop: 521000 },
     { code: "BN", name: "Brunei", pop: 452000 },
-    
+
     // --- EUROPA ---
     { code: "RU", name: "Rosja", pop: 144444000 },
     { code: "DE", name: "Niemcy", pop: 83294000 },
@@ -224,7 +224,7 @@ const game = {
         score: 0,
         isAnimating: false
     },
-    
+
     ui: {
         left: {
             flag: document.getElementById('flag-left'),
@@ -247,10 +247,105 @@ const game = {
 
     init() {
         this.ui.bestScore.textContent = localStorage.getItem('popdle_highscore') || 0;
-        this.setupImageErrorHandling(); // Dodane zabezpieczenie
+        this.setupImageErrorHandling();
         this.state.currentLeft = this.getRandomCountry();
         this.state.currentRight = this.getRandomCountry(this.state.currentLeft);
         this.render();
+
+        // Rejestruj gracza w Firebase
+        const username = typeof UserManager !== 'undefined' ? UserManager.getCurrentUser() : null;
+        if (typeof FirebaseLeaderboard !== 'undefined' && window.db && username) {
+            FirebaseLeaderboard.registerPlayer('popdle', username);
+        }
+
+        // Renderuj ranking z Firebase
+        this.renderFirebaseLeaderboard();
+    },
+
+    renderFirebaseLeaderboard() {
+        const container = document.getElementById('leaderboard-container');
+        if (!container) return;
+
+        const title = '\u{1F3C6} TOP 10 NAJD\u0141U\u017bSZYCH PASS';
+
+        if (typeof FirebaseLeaderboard !== 'undefined' && window.db) {
+            FirebaseLeaderboard.listenToScores(
+                'popdle', 'streak',
+                (scores) => this.renderLeaderboardHTML(scores, container, title),
+                10, false // lowerIsBetter = false (większa passa = lepiej)
+            );
+        } else if (typeof LeaderboardComponent !== 'undefined') {
+            LeaderboardComponent.render('popdle_highscore', 'leaderboard-container', {
+                title: 'TOP 10 NAJD\u0141U\u017bSZYCH PASS',
+                limit: 10,
+                lowerIsBetter: false
+            });
+        }
+    },
+
+    renderLeaderboardHTML(scores, container, title) {
+        const currentUser = typeof UserManager !== 'undefined' ? UserManager.getCurrentUser() : null;
+
+        if (!scores || scores.length === 0) {
+            container.innerHTML = `
+                <div class="leaderboard">
+                    <div class="leaderboard-glow"></div>
+                    <h3 class="leaderboard-title">${title}</h3>
+                    <p class="leaderboard-empty">Brak wynik\u00F3w \u2014 b\u0105d\u017A pierwszy! \u{1F680}</p>
+                </div>`;
+            return;
+        }
+
+        let rowsHTML = '';
+        scores.forEach((entry, index) => {
+            const pos = index + 1;
+            const isCurrentUser = currentUser && entry.username === currentUser;
+            const posIcon = pos === 1 ? '\u{1F947}' : pos === 2 ? '\u{1F948}' : pos === 3 ? '\u{1F949}' : `#${pos}`;
+            const dateStr = entry.date ? this.formatLeaderboardDate(entry.date) : '';
+
+            rowsHTML += `
+                <div class="leaderboard-row ${isCurrentUser ? 'current-user' : ''}">
+                    <span class="lbd-pos">${posIcon}</span>
+                    <span class="lbd-name">${this.escapeHtml(entry.username)}</span>
+                    <span class="lbd-score">${entry.score} \u{1F525}</span>
+                    <span class="lbd-date">${dateStr}</span>
+                </div>`;
+        });
+
+        container.innerHTML = `
+            <div class="leaderboard">
+                <div class="leaderboard-glow"></div>
+                <h3 class="leaderboard-title">${title}</h3>
+                <div class="leaderboard-table">
+                    <div class="leaderboard-header">
+                        <span>#</span>
+                        <span>Gracz</span>
+                        <span>Passa</span>
+                        <span>Data</span>
+                    </div>
+                    ${rowsHTML}
+                </div>
+            </div>`;
+    },
+
+    formatLeaderboardDate(isoDate) {
+        const date = new Date(isoDate);
+        const now = new Date();
+        const diffMs = now - date;
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffHours = Math.floor(diffMs / 3600000);
+        const diffDays = Math.floor(diffMs / 86400000);
+        if (diffMins < 1) return 'teraz';
+        if (diffMins < 60) return `${diffMins} min temu`;
+        if (diffHours < 24) return `${diffHours}h temu`;
+        if (diffDays < 7) return `${diffDays} dni temu`;
+        return date.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    },
+
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
     },
 
     // Funkcja awaryjna: jeśli flaga (np. Abchazji) się nie załaduje, pokaż obrazek zastępczy
@@ -285,7 +380,7 @@ const game = {
         const right = this.state.currentRight;
         this.ui.right.flag.src = `https://flagsapi.com/${right.code}/flat/64.png`;
         this.ui.right.name.textContent = right.name;
-        
+
         // Pokaż przyciski, ukryj wynik
         this.ui.right.buttonsBlock.classList.remove('hidden');
         this.ui.right.resultBlock.classList.add('hidden');
@@ -299,7 +394,7 @@ const game = {
 
         const leftPop = this.state.currentLeft.pop;
         const rightPop = this.state.currentRight.pop;
-        
+
         let isCorrect = false;
         if (direction === 'higher' && rightPop >= leftPop) isCorrect = true;
         if (direction === 'lower' && rightPop <= leftPop) isCorrect = true;
@@ -337,14 +432,25 @@ const game = {
     gameOver() {
         const score = this.state.score;
         const best = parseInt(localStorage.getItem('popdle_highscore') || 0);
-        
+
         if (score > best) {
             localStorage.setItem('popdle_highscore', score);
             this.ui.lossMsg.textContent = `Nowy rekord! ${score} pkt`;
+
+            // Zapisz do systemu użytkowników
+            if (typeof UserManager !== 'undefined') {
+                UserManager.saveUserScore('popdle_highscore', score, false);
+            }
         } else {
             this.ui.lossMsg.textContent = `Poprawna populacja to ${this.formatNumber(this.state.currentRight.pop)}`;
         }
-        
+
+        // Zapisz do Firebase (saveScore sprawdzi czy to rekord)
+        const username = typeof UserManager !== 'undefined' ? UserManager.getCurrentUser() : null;
+        if (typeof FirebaseLeaderboard !== 'undefined' && window.db && username) {
+            FirebaseLeaderboard.saveScore('popdle', 'streak', username, score, false);
+        }
+
         this.ui.finalScore.textContent = score;
         this.ui.gameOverModal.classList.remove('hidden');
     },
@@ -353,9 +459,9 @@ const game = {
         this.state.score = 0;
         this.ui.score.textContent = "0";
         this.ui.bestScore.textContent = localStorage.getItem('popdle_highscore') || 0;
-        
+
         this.ui.gameOverModal.classList.add('hidden');
-        
+
         this.state.currentLeft = this.getRandomCountry();
         this.state.currentRight = this.getRandomCountry(this.state.currentLeft);
         this.render();

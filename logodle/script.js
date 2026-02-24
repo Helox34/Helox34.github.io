@@ -11,7 +11,7 @@ const allLogos = {
     "cocacola": { name: ["Coca-Cola", "Cola"], domain: "coca-cola.com" },
     "samsung": { name: ["Samsung"], domain: "samsung.com" },
     "microsoft": { name: ["Microsoft"], domain: "microsoft.com" },
-    
+
     // TIER 2: Znane (Średnie)
     "spotify": { name: ["Spotify"], domain: "spotify.com" },
     "discord": { name: ["Discord"], domain: "discord.com" },
@@ -25,7 +25,7 @@ const allLogos = {
     "adidas": { name: ["Adidas"], domain: "adidas.com" },
     "burgerking": { name: ["Burger King"], domain: "bk.com" },
     "playstation": { name: ["PlayStation", "PS"], domain: "playstation.com" },
-    
+
     // TIER 3: Trudniejsze (Pro)
     "linux": { name: ["Linux", "Tux"], domain: "linux.org" },
     "github": { name: ["GitHub"], domain: "github.com" },
@@ -39,7 +39,7 @@ const allLogos = {
     "volkswagen": { name: ["Volkswagen", "VW"], domain: "vw.com" },
     "adobe": { name: ["Adobe"], domain: "adobe.com" },
     "nvidia": { name: ["Nvidia"], domain: "nvidia.com" },
-    
+
     // TIER 4: Ekspert
     "mastercard": { name: ["Mastercard"], domain: "mastercard.com" },
     "visa": { name: ["Visa"], domain: "visa.com" },
@@ -60,8 +60,8 @@ const tier4Codes = ["mastercard", "visa", "paypal", "intel", "amd", "dell", "hp"
 
 function getSubset(codesArray) {
     const subset = {};
-    codesArray.forEach(code => { 
-        if (allLogos[code]) subset[code] = allLogos[code].name; 
+    codesArray.forEach(code => {
+        if (allLogos[code]) subset[code] = allLogos[code].name;
     });
     return subset;
 }
@@ -94,7 +94,15 @@ const ui = {
 
     toggleInstructions() { document.getElementById('instructions').classList.toggle('hidden'); },
 
-    init() { this.updateMenuScores(); },
+    init() {
+        this.updateMenuScores();
+
+        // Rejestruj gracza w Firebase
+        const username = typeof UserManager !== 'undefined' ? UserManager.getCurrentUser() : null;
+        if (typeof FirebaseLeaderboard !== 'undefined' && window.db && username) {
+            FirebaseLeaderboard.registerPlayer('logodle', username);
+        }
+    },
 
     updateMenuScores() {
         const modes = ['easy', 'hard', 'pro', 'expert'];
@@ -121,9 +129,11 @@ const ui = {
 
     updateBlur(px, isExpert) {
         let filter = `blur(${px}px)`;
-        // W trybie Expert dodajemy czarno-biały filtr i powiększenie (fragment loga)
-        if (isExpert) filter += ' grayscale(100%) scale(1.5)';
+        // W trybie Expert dodajemy czarno-biały filtr
+        if (isExpert) filter += ' grayscale(100%)';
         this.elements.flag.style.filter = filter;
+        // Powiększenie (fragment loga) ustawiamy osobno przez transform
+        this.elements.flag.style.transform = isExpert ? 'scale(1.5)' : 'none';
     },
 
     setDots(total, used) {
@@ -142,7 +152,7 @@ const ui = {
         void el.offsetWidth;
         el.classList.add('anim-popup');
     },
-    
+
     showRecordAnimation() {
         const el = this.elements.recordAnim;
         el.classList.remove('hidden');
@@ -162,9 +172,9 @@ const ui = {
 const game = {
     // StartBlur: 15px - to nasza wartość początkowa
     config: { maxTries: 6, maxRounds: 8, startBlur: 15 },
-    state: { 
-        mode: null, round: 1, tries: 0, streak: 0, score: 0, 
-        currentCode: null, currentBlur: 0, itemsList: [], recordBroken: false 
+    state: {
+        mode: null, round: 1, tries: 0, streak: 0, score: 0,
+        currentCode: null, currentBlur: 0, itemsList: [], recordBroken: false
     },
     itemNames: [],
 
@@ -173,7 +183,7 @@ const game = {
         const allCodes = Object.keys(source);
         const lastPlayed = JSON.parse(localStorage.getItem('logo_lastPlayed_' + mode) || '[]');
         let candidates = allCodes.filter(code => !lastPlayed.includes(code));
-        
+
         if (candidates.length < this.config.maxRounds) {
             const needed = this.config.maxRounds - candidates.length;
             const recycled = this.shuffle(lastPlayed).slice(0, needed);
@@ -200,6 +210,9 @@ const game = {
         ui.elements.streak.textContent = '0';
         ui.showGame();
         this.newRound();
+
+        // Renderuj leaderboard od razu
+        this.renderFirebaseLeaderboard(mode);
     },
 
     newRound() {
@@ -207,7 +220,7 @@ const game = {
 
         this.state.currentCode = this.state.itemsList[this.state.round - 1];
         this.state.tries = 0;
-        
+
         // Ustawiamy początkowy blur na 15px (z konfigu)
         this.state.currentBlur = this.config.startBlur;
 
@@ -218,14 +231,14 @@ const game = {
         ui.elements.round.textContent = this.state.round;
         ui.elements.msg.textContent = "Zgadnij markę!";
         ui.elements.msg.style.color = "var(--text-muted)";
-        
+
         ui.setDots(this.config.maxTries, 0);
 
         const progressPct = ((this.state.round - 1) / this.config.maxRounds) * 100;
         ui.elements.progressBar.style.width = `${progressPct}%`;
 
         ui.elements.flag.style.opacity = '0';
-        
+
         // Aplikujemy blur
         ui.updateBlur(this.state.currentBlur, this.state.mode === 'expert');
 
@@ -257,10 +270,10 @@ const game = {
 
             this.state.score += totalPoints;
             this.state.streak++;
-            
+
             ui.elements.score.textContent = this.state.score;
             ui.elements.streak.textContent = this.state.streak;
-            
+
             // Obsługa rekordu
             const recordKey = `logo_bestScore_${this.state.mode}`;
             const currentBest = parseInt(localStorage.getItem(recordKey) || 0);
@@ -275,13 +288,14 @@ const game = {
 
             ui.elements.msg.textContent = `Brawo! To ${currentSource[this.state.currentCode][0]}`;
             ui.elements.msg.style.color = "var(--success)";
-            
+
             // Wyłączamy filtry (pokazujemy czyste logo)
             ui.elements.flag.style.filter = "none";
+            ui.elements.flag.style.transform = "none";
             ui.animatePoints(totalPoints);
-            
+
             const dots = ui.elements.attemptsBox.children;
-            if(dots[this.state.tries-1]) dots[this.state.tries-1].classList.add('success');
+            if (dots[this.state.tries - 1]) dots[this.state.tries - 1].classList.add('success');
 
             this.nextRoundDelay();
         } else {
@@ -291,6 +305,7 @@ const game = {
                 ui.elements.msg.textContent = `Porażka! To: ${currentSource[this.state.currentCode][0]}`;
                 ui.elements.msg.style.color = "var(--danger)";
                 ui.elements.flag.style.filter = "none";
+                ui.elements.flag.style.transform = "none";
                 this.state.streak = 0;
                 ui.elements.streak.textContent = 0;
                 this.nextRoundDelay();
@@ -299,13 +314,13 @@ const game = {
                 ui.elements.msg.textContent = "Źle! Obrazek się wyostrza...";
                 ui.elements.msg.style.color = "var(--warning)";
                 ui.shakeInput();
-                
+
                 // --- PROPORCJONALNE ZMNIEJSZANIE BLURA ---
                 // Obliczamy krok: startBlur / (liczba prób - 1)
                 // Dzięki temu przy ostatniej próbie zejdziemy idealnie do 0.
                 const step = this.config.startBlur / (this.config.maxTries - 1);
                 this.state.currentBlur = Math.max(0, this.state.currentBlur - step);
-                
+
                 ui.updateBlur(this.state.currentBlur, this.state.mode === 'expert');
             }
         }
@@ -325,10 +340,116 @@ const game = {
         ui.elements.msg.textContent = `Koniec! Twój wynik: ${this.state.score}`;
         ui.elements.msg.style.color = "var(--text-main)";
         ui.elements.backBtn.classList.remove('hidden');
+
+        // Zapisz rekord do localStorage
+        const recordKey = `logo_bestScore_${this.state.mode}`;
+        const currentBest = parseInt(localStorage.getItem(recordKey) || 0);
+        if (this.state.score > currentBest) {
+            localStorage.setItem(recordKey, this.state.score);
+
+            if (typeof UserManager !== 'undefined') {
+                UserManager.saveUserScore(recordKey, this.state.score, false);
+            }
+        }
+
+        // Zapisz do Firebase
+        const username = typeof UserManager !== 'undefined' ? UserManager.getCurrentUser() : null;
+        if (typeof FirebaseLeaderboard !== 'undefined' && window.db && username) {
+            FirebaseLeaderboard.saveScore('logodle', this.state.mode, username, this.state.score, false);
+        }
+
+        // Renderuj leaderboard
+        this.renderFirebaseLeaderboard(this.state.mode);
     },
 
     backToMenu() { ui.showMenu(); },
-    
+
+    renderFirebaseLeaderboard(mode) {
+        const container = document.getElementById('leaderboard-container');
+        if (!container) return;
+
+        const title = '🏆 TOP 10 NAJLEPSZYCH WYNIKÓW';
+
+        if (typeof FirebaseLeaderboard !== 'undefined' && window.db) {
+            FirebaseLeaderboard.listenToScores(
+                'logodle', mode || 'easy',
+                (scores) => this.renderLeaderboardHTML(scores, container, title),
+                10, false
+            );
+        } else if (typeof LeaderboardComponent !== 'undefined') {
+            LeaderboardComponent.render(`logo_bestScore_${mode || 'easy'}`, 'leaderboard-container', {
+                title: 'TOP 10 NAJLEPSZYCH WYNIKÓW',
+                limit: 10,
+                lowerIsBetter: false
+            });
+        }
+    },
+
+    renderLeaderboardHTML(scores, container, title) {
+        const currentUser = typeof UserManager !== 'undefined' ? UserManager.getCurrentUser() : null;
+
+        if (!scores || scores.length === 0) {
+            container.innerHTML = `
+                <div class="leaderboard">
+                    <div class="leaderboard-glow"></div>
+                    <h3 class="leaderboard-title">${title}</h3>
+                    <p class="leaderboard-empty">Brak wyników — bądź pierwszy! 🚀</p>
+                </div>`;
+            return;
+        }
+
+        let rowsHTML = '';
+        scores.forEach((entry, index) => {
+            const pos = index + 1;
+            const isCurrentUser = currentUser && entry.username === currentUser;
+            const posIcon = pos === 1 ? '🥇' : pos === 2 ? '🥈' : pos === 3 ? '🥉' : `#${pos}`;
+            const dateStr = entry.date ? this.formatLeaderboardDate(entry.date) : '';
+
+            rowsHTML += `
+                <div class="leaderboard-row ${isCurrentUser ? 'current-user' : ''}">
+                    <span class="lbd-pos">${posIcon}</span>
+                    <span class="lbd-name">${this.escapeHtml(entry.username)}</span>
+                    <span class="lbd-score">${entry.score} ⭐</span>
+                    <span class="lbd-date">${dateStr}</span>
+                </div>`;
+        });
+
+        container.innerHTML = `
+            <div class="leaderboard">
+                <div class="leaderboard-glow"></div>
+                <h3 class="leaderboard-title">${title}</h3>
+                <div class="leaderboard-table">
+                    <div class="leaderboard-header">
+                        <span>#</span>
+                        <span>Gracz</span>
+                        <span>Wynik</span>
+                        <span>Data</span>
+                    </div>
+                    ${rowsHTML}
+                </div>
+            </div>`;
+    },
+
+    formatLeaderboardDate(isoDate) {
+        const date = new Date(isoDate);
+        const now = new Date();
+        const diffMs = now - date;
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffHours = Math.floor(diffMs / 3600000);
+        const diffDays = Math.floor(diffMs / 86400000);
+        if (diffMins < 1) return 'teraz';
+        if (diffMins < 60) return `${diffMins} min temu`;
+        if (diffHours < 24) return `${diffHours}h temu`;
+        if (diffDays < 7) return `${diffDays} dni temu`;
+        return date.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    },
+
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    },
+
     shuffle(array) {
         let arr = array.slice();
         for (let i = arr.length - 1; i > 0; i--) {
@@ -349,7 +470,7 @@ ui.elements.input.addEventListener('input', (e) => {
     const val = e.target.value.toLowerCase();
     ui.elements.suggestList.innerHTML = '';
     if (val.length < 2) { ui.elements.suggestList.classList.add('hidden'); return; }
-    
+
     const matches = game.itemNames.filter(c => c.toLowerCase().startsWith(val)).slice(0, 5);
     if (matches.length > 0) {
         ui.elements.suggestList.classList.remove('hidden');
