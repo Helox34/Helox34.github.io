@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impostor - Gra Towarzyska</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <a href="../index.html" class="btn-home">
+        <i class="fa-solid fa-house"></i> <span>MENU</span>
+    </a>
+    <div class="bg-animation"></div>
+
+    <!-- ============ EKRAN 1: USTAWIENIA ============ -->
+    <div id="screen-setup" class="screen active">
+        <div class="glass-panel setup-panel fade-in">
+            <header class="panel-header">
+                <h1><i class="fa-solid fa-user-secret"></i> IMPOSTOR</h1>
+                <p class="subtitle">Znajdź szpiega wśród swoich</p>
+            </header>
+
+            <div class="players-section">
+                <p class="section-label"><i class="fa-solid fa-users"></i> Gracze</p>
+
+                <div class="add-player-row">
+                    <input type="text" id="player-input" placeholder="Wpisz imię gracza..." maxlength="15"
+                        autocomplete="off">
+                    <button id="btn-add" class="btn-icon"><i class="fa-solid fa-plus"></i></button>
+                </div>
+
+                <ul id="player-list" class="player-list"></ul>
+
+                <p id="player-count" class="player-count">Dodaj minimum 3 graczy</p>
+            </div>
+
+            <div class="settings-section">
+                <p class="section-label"><i class="fa-solid fa-sliders"></i> Ustawienia</p>
+                <div class="setting-row">
+                    <label>Impostorzy:</label>
+                    <div class="stepper" id="stepper">
+                        <button class="btn-step" onclick="game.changeImpostors(-1)">−</button>
+                        <span id="impostor-count">1</span>
+                        <button class="btn-step" onclick="game.changeImpostors(1)">+</button>
+                    </div>
+                </div>
+                <div class="setting-row toggle-row" onclick="game.toggleRandom()">
+                    <label><i class="fa-solid fa-dice"></i> Losowa liczba</label>
+                    <div class="toggle-switch" id="random-toggle">
+                        <div class="toggle-knob"></div>
+                    </div>
+                </div>
+                <p class="setting-hint" id="impostor-hint">Dokładnie 1 impostor</p>
+            </div>
+
+            <button id="btn-start" class="btn-primary disabled" disabled>
+                <i class="fa-solid fa-play"></i> ROZPOCZNIJ GRĘ
+            </button>
+
+            <div class="rules-box">
+                <p class="rules-title"><i class="fa-solid fa-circle-info"></i> Zasady</p>
+                <ul>
+                    <li><strong>Dobrzy</strong> otrzymują hasło (np. "Rower")</li>
+                    <li><strong>Impostor</strong> otrzymuje tylko podpowiedź (np. "Transport")</li>
+                    <li>Każdy opisuje swoje hasło jednym słowem</li>
+                    <li>Po dyskusji — głosujecie, kto jest Impostorem!</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ EKRAN 2: ROZDAWANIE RÓL ============ -->
+    <div id="screen-reveal" class="screen">
+        <div class="glass-panel reveal-panel fade-in">
+
+            <!-- Stan: czekaj na gracza -->
+            <div id="reveal-waiting" class="reveal-state">
+                <div class="reveal-player-icon">
+                    <i class="fa-solid fa-hand-pointer"></i>
+                </div>
+                <h2>Podaj telefon:</h2>
+                <p class="reveal-player-name" id="reveal-name"></p>
+                <button id="btn-show-role" class="btn-primary">
+                    <i class="fa-solid fa-eye"></i> POKAŻ ROLĘ
+                </button>
+            </div>
+
+            <!-- Stan: pokaż rolę -->
+            <div id="reveal-role" class="reveal-state hidden">
+                <div id="role-icon" class="role-icon"></div>
+                <h2 id="role-title" class="role-title"></h2>
+                <div id="role-word" class="role-word"></div>
+                <p id="role-description" class="role-desc"></p>
+                <button id="btn-next-player" class="btn-primary">
+                    <i class="fa-solid fa-eye-slash"></i> ZAKRYJ I PODAJ DALEJ
+                </button>
+            </div>
+
+            <div class="reveal-progress">
+                <div class="reveal-progress-bar" id="reveal-progress"></div>
+            </div>
+            <p class="reveal-counter" id="reveal-counter"></p>
+        </div>
+    </div>
+
+    <!-- ============ EKRAN 3: ROZGRYWKA ============ -->
+    <div id="screen-game" class="screen">
+        <div class="glass-panel game-panel fade-in">
+            <header class="panel-header">
+                <h1><i class="fa-solid fa-comments"></i> DYSKUSJA</h1>
+                <p class="subtitle">Rozmawiajcie i znajdźcie Impostora!</p>
+            </header>
+
+            <div class="game-players" id="game-players"></div>
+
+            <div class="game-tip">
+                <i class="fa-solid fa-lightbulb"></i>
+                <p>Każdy gracz opisuje swoje hasło <strong>jednym słowem</strong>. Obserwuj, kto się waha!</p>
+            </div>
+
+            <button id="btn-reveal-roles" class="btn-primary btn-danger">
+                <i class="fa-solid fa-mask"></i> POKAŻ ROLE
+            </button>
+
+            <!-- Sekcja odkrytych ról (ukryta domyślnie) -->
+            <div id="roles-reveal" class="roles-reveal hidden">
+                <div class="result-reveal">
+                    <div class="result-word">
+                        <span class="result-label">Hasło</span>
+                        <span id="result-word" class="result-value"></span>
+                    </div>
+                    <div class="result-word">
+                        <span class="result-label">Podpowiedź</span>
+                        <span id="result-hint" class="result-value hint"></span>
+                    </div>
+                </div>
+                <div class="result-roles" id="result-roles"></div>
+            </div>
+
+            <button id="btn-new-game" class="btn-primary hidden" onclick="game.reset()">
+                <i class="fa-solid fa-rotate-right"></i> NOWA GRA
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="../security.js"></script>
+</body>
+
+</html>
