@@ -1,143 +1,42 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Quiz Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>MAJ GARDEN - Profesjonalne Usługi Ogrodnicze</title>
+    <style>
+        
+*{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;}
+      body {
+          background-color: #1e3512; 
+          background-image: linear-gradient(135deg, #1e3512 0%, #0f1c08 100%);
+          font-family: 'Arial', sans-serif;
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 20px;}.container {
+          max-width: 800px;
+          width: 100%;
+          background: #fff;
+          padding: 15px;
+          border-radius: 12px;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 5px 15px rgba(0, 0, 0, 0.3);}.plakat-img {
+          width: 100%;
+          height: auto;
+          display: block;
+          border-radius: 6px;}@media (max-width: 480px) {
+          body {
+              padding: 10px;}.container {
+              padding: 8px;}}
+</style>
 </head>
-
 <body>
-
-    <!-- Modal wprowadzania nazwy użytkownika -->
-    <div id="username-modal" class="hidden">
-        <div class="username-card">
-            <div class="username-header">
-                <h2>Witaj w Game Hub!</h2>
-                <p>Podaj swoją nazwę, aby zapisywać wyniki</p>
-            </div>
-            <div class="username-input-group">
-                <input type="text" id="username-input" placeholder="Twoja nazwa..." maxlength="20" autocomplete="off">
-                <span id="username-error" class="hidden"></span>
-            </div>
-            <button id="username-submit">ZACZNIJ GRĘ</button>
-        </div>
-    </div>
-
-    <div class="bg-animation"></div>
-
-    <div class="main-container">
-
-        <header class="hub-header fade-in">
-            <h1 class="main-title">GAME <span class="accent-text">HUB</span></h1>
-            <p class="subtitle">Wybierz wyzwanie i pobij rekordy</p>
-        </header>
-
-        <div class="games-grid">
-
-
-
-            <a href="flagdle/index.html" class="game-card card-flagdle fade-in-stagger">
-                <div class="card-icon"><i class="fa-solid fa-flag"></i></div>
-                <div class="card-content">
-                    <h2>FLAGDLE</h2>
-                    <p>Zgadnij kraj po zamazanej fladze.</p>
-                </div>
-                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-
-            <a href="population_higher-lower/index.html" class="game-card card-popdle fade-in-stagger">
-                <div class="card-icon"><i class="fa-solid fa-users"></i></div>
-                <div class="card-content">
-                    <h2>POPDLE</h2>
-                    <p>Kto ma większą populację?</p>
-                </div>
-                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-
-            <a href="logodle/index.html" class="game-card card-logodle fade-in-stagger">
-                <div class="card-icon"><i class="fa-solid fa-shapes"></i></div>
-                <div class="card-content">
-                    <h2>LOGODLE</h2>
-                    <p>Rozpoznaj markę po fragmencie.</p>
-                </div>
-                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-
-            <a href="items_higher-lower/index.html" class="game-card card-pricedle fade-in-stagger">
-                <div class="card-icon"><i class="fa-solid fa-tag"></i></div>
-                <div class="card-content">
-                    <h2>PRICEDLE</h2>
-                    <p>Co kosztuje więcej?</p>
-                </div>
-                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-
-            <a href="Chronodle/index.html" class="game-card card-chronodle fade-in-stagger">
-                <div class="card-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                <div class="card-content">
-                    <h2>CHRONODLE</h2>
-                    <p>Co wydarzyło się wcześniej?</p>
-                </div>
-                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-
-            <a href="reaction_time/index.html" class="game-card card-reaction fade-in-stagger">
-                <div class="card-icon"><i class="fa-solid fa-bolt"></i></div>
-                <div class="card-content">
-                    <h2>REACTION</h2>
-                    <p>Test czasu reakcji.</p>
-                </div>
-                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-
-            <a href="ziemniak/index.html" class="game-card card-ziemniak fade-in-stagger">
-                <div class="card-icon"><img src="ziemniak/potato.png" alt="Ziemniak" style="width: 40px; height: 40px;">
-                </div>
-                <div class="card-content">
-                    <h2>ZIEMNIAK</h2>
-                    <p>Gra towarzyska - Gorący Ziemniak!</p>
-                </div>
-                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-
-            <a href="game_of_live/index.html" class="game-card card-gameoflife fade-in-stagger">
-                <div class="card-icon"><i class="fa-solid fa-microscope"></i></div>
-                <div class="card-content">
-                    <h2>GAME OF LIFE</h2>
-                    <p>Jedna z najstarszych gier komputerowych</p>
-                </div>
-                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-
-            <a href="impostor/index.html" class="game-card card-impostor fade-in-stagger">
-                <div class="card-icon"><i class="fa-solid fa-user-secret"></i></div>
-                <div class="card-content">
-                    <h2>IMPOSTOR</h2>
-                    <p>Znajdź szpiega wśród swoich!</p>
-                </div>
-                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-        </div>
-
-        <footer class="hub-footer fade-in">
-            <p>©Bartłomiej Piwowarczyk &bull; 2026</p>
-        </footer>
-
-    </div>
-
-    <!-- Firebase SDK (compat) -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-    <script src="firebase-config.js"></script>
-    <script src="firebase-leaderboard.js"></script>
-    <!-- System zarządzania użytkownikami -->
-    <script src="user-manager.js"></script>
-    <script src="script.js"></script>
-    <script src="security.js"></script>
+<div class="container">
+<img src="zdjecie2.jpeg" alt="MAJ GARDEN - Oferta Usług Ogrodniczych" class="plakat-img">
+</div>
 </body>
-
 </html>
